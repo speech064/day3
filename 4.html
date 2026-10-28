@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       // key 100개(a1~a100), 각 배열은 101~200개로 key마다 길이가 다름
+       let data = {}
+       for (let k = 1; k <= 100; k++) {
+        data["a"+k] = Array.from({length: 100 + k}, (_, j) => k * 1000 + j)
+       }
+       let v = []
+       for (let index = 0; index < 100; index++) {
+        v.push(index + 1)
+       }
+       const show = (id)=> console.log(id + "을 보여줘")
+ for (const i of v) {
+            for (const element of data["a"+i]) {
+                console.log(element+"\n")
+                show(element)
+            }
+        }
+
+
+</script>
+</body>
+</html>

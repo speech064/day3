@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>티칭</title>
+<style>
+  :root { --bg:#f5f7fa; --card:#fff; --line:#e3e8ef; --txt:#1f2933; --sub:#6b7785; --pri:#2563eb; --hi:#fff4c2; --ok:#16a34a; --acc:#f97316; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,"Malgun Gothic",sans-serif; background:var(--bg); color:var(--txt); }
+  header { padding:22px 20px 8px; text-align:center; }
+  header h1 { margin:0; font-size:26px; }
+  header p { margin:4px 0 0; color:var(--sub); font-size:14px; }
+  .wrap { max-width:1080px; margin:0 auto; padding:12px 16px 40px; display:grid; gap:14px; }
+  .main { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  h2 { margin:0 0 10px; font-size:13px; letter-spacing:.06em; color:var(--sub); }
+
+  /* code */
+  .code { font-family:Consolas,"D2Coding",monospace; font-size:15px; }
+  .ln { display:flex; padding:4px 8px; border-radius:6px; border-left:4px solid transparent; transition:background .25s, border-color .25s; white-space:pre; }
+  .ln .no { width:26px; color:#a0aab5; user-select:none; }
+  .ln.on { background:var(--hi); border-left-color:var(--acc); }
+
+  /* variables */
+  .vars { display:grid; gap:14px; }
+  .row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .name { width:44px; font-family:Consolas,monospace; font-weight:700; }
+  .box { min-width:64px; height:48px; padding:0 14px; display:flex; align-items:center; justify-content:center; border:2px solid var(--line); border-radius:10px; font:700 18px Consolas,monospace; background:#fafbfc; transition:border-color .25s, background .25s; }
+  .box.empty { color:#c0c8d2; }
+  .box.pop { animation:pop .5s; border-color:var(--pri); background:#eaf1ff; }
+  @keyframes pop { 0%{transform:scale(.6)} 60%{transform:scale(1.18)} 100%{transform:scale(1)} }
+  .cells { display:flex; gap:8px; }
+  .cell { position:relative; text-align:center; }
+  .cell .idx { font-size:11px; color:var(--sub); margin-top:2px; }
+  .cell .box { min-width:56px; }
+  .cell.cur .box { border-color:var(--acc); background:#fff1e6; transform:translateY(-4px); }
+  .cell .ptr { position:absolute; top:-20px; left:0; right:0; font-size:12px; color:var(--acc); opacity:0; transition:opacity .2s; }
+  .cell.cur .ptr { opacity:1; }
+  .note { font-size:12px; color:var(--sub); }
+
+  /* function machine */
+  .machine { display:flex; align-items:center; gap:10px; flex-wrap:wrap; min-height:56px; }
+  .fbox { padding:10px 14px; border-radius:10px; background:#eef2ff; border:2px solid #c7d2fe; font:700 15px Consolas,monospace; transition:.25s; }
+  .fbox.active { background:var(--pri); color:#fff; border-color:var(--pri); transform:scale(1.06); }
+  .io { font:700 16px Consolas,monospace; opacity:0; transform:translateX(-10px); transition:.35s; }
+  .io.show { opacity:1; transform:none; }
+  .io.out { color:var(--ok); }
+  .arrow { color:var(--sub); opacity:0; transition:.3s; } .arrow.show { opacity:1; }
+
+  /* console */
+  .console { background:#101820; color:#c9f7d1; font:14px Consolas,monospace; border-radius:8px; padding:10px 12px; min-height:92px; }
+  .console div { animation:slide .35s; }
+  @keyframes slide { from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+  .console .prompt { color:#6ee7b7; }
+  .console .empty { color:#4b5c6b; animation:none; }
+
+  /* explain + controls */
+  .explain { font-size:17px; line-height:1.6; min-height:56px; display:flex; align-items:center; }
+  .explain b { background:var(--hi); padding:0 4px; border-radius:4px; }
+  .controls { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  button, select { font:inherit; font-size:14px; padding:9px 16px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer; }
+  button.primary { background:var(--pri); color:#fff; border-color:var(--pri); }
+  button:disabled { opacity:.4; cursor:default; }
+  .bar { flex:1; min-width:120px; height:6px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .bar i { display:block; height:100%; width:0; background:var(--pri); transition:width .3s; }
+  .count { font-size:13px; color:var(--sub); min-width:64px; text-align:right; }
+  @media (max-width:760px) { .main { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>티칭</h1>
+  <p>코드가 한 줄씩 실행되는 모습을 따라가 보세요</p>
+</header>
+
+<div class="wrap">
+  <div class="card"><div class="explain" id="explain"></div></div>
+
+  <div class="main">
+    <div class="card">
+      <h2>CODE</h2>
+      <div class="code" id="code"></div>
+    </div>
+
+    <div class="vars card">
+      <div>
+        <h2>변수</h2>
+        <div class="row" style="margin-top:22px">
+          <span class="name">arr</span>
+          <div class="cells" id="arr"></div>
+        </div>
+      </div>
+      <div class="row"><span class="name">v</span><div class="box empty" id="v">?</div><span class="note">반복마다 arr에서 꺼낸 값</span></div>
+      <div class="row"><span class="name">sum</span><div class="box empty" id="sum">?</div><span class="note">더한 값을 모으는 상자</span></div>
+      <div>
+        <h2>함수 f</h2>
+        <div class="machine">
+          <span class="io" id="fin"></span>
+          <span class="arrow" id="a1">→</span>
+          <div class="fbox" id="fbox">f(i) = i × 3</div>
+          <span class="arrow" id="a2">→</span>
+          <span class="io out" id="fout"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>CONSOLE</h2>
+    <div class="console" id="console"></div>
+  </div>
+
+  <div class="card controls">
+    <button id="reset">⏮ 처음</button>
+    <button id="prev">◀ 이전</button>
+    <button id="next" class="primary">다음 ▶</button>
+    <button id="play">▶ 자동 재생</button>
+    <select id="speed" title="재생 속도">
+      <option value="2200">느리게</option><option value="1400" selected>보통</option><option value="700">빠르게</option>
+    </select>
+    <div class="bar"><i id="prog"></i></div>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const CODE = [
+  'const f = (i) => i * 3',
+  'let arr = [10, 20, 30]',
+  'let sum = 0',
+  'for (const v of arr) {',
+  "    console.log('v = ' + v)",
+  '    sum = sum + f(v)',
+  '}',
+  'console.log(sum)',
+];
+
+// 코드를 실제로 한 단계씩 실행하며 화면 상태(snapshot)를 기록한다
+const steps = [];
+const st = { f: false, arr: false, idx: -1, v: null, sum: null, call: null, logs: [] };
+function snap(line, text) { steps.push({ line, text, s: JSON.parse(JSON.stringify(st)) }); }
+
+snap(-1, '시작합니다. <b>다음 ▶</b>을 눌러 코드를 한 줄씩 실행해 보세요.');
+const f = (i) => i * 3;
+st.f = true;
+snap(0, '<b>함수 f</b>를 만듭니다. 숫자를 받으면 <b>3배</b>로 돌려주는 기계예요. 아직 실행하지는 않았어요.');
+const arr = [10, 20, 30];
+st.arr = true;
+snap(1, '<b>arr</b> 상자에 숫자 3개 <b>[10, 20, 30]</b>를 담습니다.');
+let sum = 0;
+st.sum = 0;
+snap(2, '<b>sum</b>을 <b>0</b>으로 시작합니다. 앞으로 계산 결과를 여기에 모을 거예요.');
+arr.forEach((val, k) => {
+  st.idx = k; st.v = val; st.call = null;
+  snap(3, `반복 ${k + 1}번째: arr에서 ${k + 1}번째 값을 꺼내 <b>v = ${val}</b>로 만듭니다.`);
+  st.logs.push('v = ' + val);
+  snap(4, `콘솔에 <b>'v = ${val}'</b>를 출력합니다.`);
+  const out = f(val);
+  st.call = { in: val, out };
+  snap(5, `<b>f(${val})</b>를 호출합니다. ${val} × 3 = <b>${out}</b>. 함수가 ${out}을 돌려줘요.`);
+  const before = sum;
+  sum = sum + out;
+  st.sum = sum;
+  snap(5, `<b>sum = ${before} + ${out} = ${sum}</b>. sum이 ${sum}으로 바뀌었어요.`);
+  st.call = null;
+});
+st.idx = -1; st.v = null;
+snap(3, 'arr에서 꺼낼 값이 <b>더 없어서</b> 반복이 끝납니다.');
+st.logs.push(String(sum));
+snap(7, `마지막으로 <b>sum</b>을 출력합니다. 30 + 60 + 90 = <b>${sum}</b>. 끝!`);
+
+// ── 화면 ──
+$('code').innerHTML = CODE.map((t, i) => `<div class="ln" data-i="${i}"><span class="no">${i + 1}</span><span></span></div>`).join('');
+document.querySelectorAll('#code .ln').forEach((el, i) => (el.lastChild.textContent = CODE[i]));
+$('arr').innerHTML = [10, 20, 30].map((n, i) => `<div class="cell" data-i="${i}"><div class="ptr">▼ 꺼냄</div><div class="box">${n}</div><div class="idx">[${i}]</div></div>`).join('');
+
+let cur = 0, timer = null, prev = null;
+
+function setBox(el, val) {
+  const text = val === null ? '?' : String(val);
+  const changed = el.textContent !== text;
+  el.textContent = text;
+  el.classList.toggle('empty', val === null);
+  if (changed && val !== null) { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+}
+
+function render() {
+  const { line, text, s } = steps[cur];
+  $('explain').innerHTML = text;
+  document.querySelectorAll('#code .ln').forEach((el) => el.classList.toggle('on', +el.dataset.i === line));
+  document.querySelectorAll('#arr .cell').forEach((el) => el.classList.toggle('cur', +el.dataset.i === s.idx));
+  $('arr').style.opacity = s.arr ? 1 : .25;
+  setBox($('v'), s.v);
+  setBox($('sum'), s.sum);
+  $('fbox').classList.toggle('active', !!s.call);
+  $('fin').textContent = s.call ? s.call.in : '';
+  $('fout').textContent = s.call ? s.call.out : '';
+  ['fin', 'fout', 'a1', 'a2'].forEach((id) => $(id).classList.toggle('show', !!s.call));
+  $('console').innerHTML = s.logs.length
+    ? s.logs.map((l) => `<div><span class="prompt">&gt;</span> ${l}</div>`).join('')
+    : '<div class="empty">(아직 출력 없음)</div>';
+  $('prog').style.width = (cur / (steps.length - 1)) * 100 + '%';
+  $('count').textContent = `${cur} / ${steps.length - 1}`;
+  $('prev').disabled = $('reset').disabled = cur === 0;
+  $('next').disabled = cur === steps.length - 1;
+  if (cur === steps.length - 1) stop();
+}
+
+function go(n) { cur = Math.max(0, Math.min(steps.length - 1, n)); render(); }
+function stop() { clearInterval(timer); timer = null; $('play').textContent = '▶ 자동 재생'; }
+function play() {
+  if (timer) return stop();
+  if (cur === steps.length - 1) go(0);
+  $('play').textContent = '⏸ 멈춤';
+  timer = setInterval(() => go(cur + 1), +$('speed').value);
+}
+
+$('next').onclick = () => { stop(); go(cur + 1); };
+$('prev').onclick = () => { stop(); go(cur - 1); };
+$('reset').onclick = () => { stop(); go(0); };
+$('play').onclick = play;
+$('speed').onchange = () => { if (timer) { stop(); play(); } };
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') $('next').click();
+  if (e.key === 'ArrowLeft') $('prev').click();
+});
+render();
+</script>
+</body>
+</html>
