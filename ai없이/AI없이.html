@@ -295,6 +295,8 @@ const SYNONYMS = {
   절: ['사찰'], 해안: ['해안도로'], 트레킹: ['올레길'], 아이: KIDS, 아이들: KIDS, 키즈: KIDS, 어린이: KIDS,
 };
 const STOP_JOSA = /(에서|으로|에는|이나|에|을|를|은|는|이|가|도|로|의|만|좀)$/;
+// 목록에 아예 없는 종류(관광지 목록이라 음식점·숙소 등은 없음)
+const OUT_OF_LIST = ['맛집', '식당', '음식', '술집', '숙소', '호텔', '펜션', '쇼핑', '렌터카'];
 const squash = (s) => s.replace(/\s+/g, '');
 const MAX_KEYWORD = 20;
 let allSpots = [], vocab = [];
@@ -315,11 +317,12 @@ function parseQuery(q) {
   Object.entries(SYNONYMS).forEach(([k, vs]) => {
     if (q.includes(k) || tokens.includes(k)) vs.forEach((v) => terms.add(v));
   });
-  return { areas, indoor, terms: [...terms] };
+  const missing = OUT_OF_LIST.filter((w) => q.includes(w));
+  return { areas, indoor, terms: [...terms], missing };
 }
 
 function keywordSearch(q) {
-  const { areas, indoor, terms } = parseQuery(q);
+  const { areas, indoor, terms, missing } = parseQuery(q);
   const nq = squash(q);
   const byName = allSpots.filter((s) => nq.includes(squash(s.name)));
   const hasCond = areas.length || indoor !== undefined || terms.length;
@@ -334,7 +337,11 @@ function keywordSearch(q) {
       .sort((a, b) => b.score - a.score)
       .map((x) => x.s);
   }
-  return { found, areas, indoor, terms, ok: hasCond || byName.length > 0 };
+  // 조건 전체로는 없지만 그 유형이 목록 어딘가에 있으면 참고용으로 보여준다
+  const alt = !found.length && terms.length
+    ? allSpots.filter((s) => terms.some((t) => s.type.split(' · ').includes(t)))
+    : [];
+  return { found, alt, areas, indoor, terms, missing, ok: hasCond || missing.length > 0 || byName.length > 0 };
 }
 
 function ask() {
@@ -350,12 +357,36 @@ function ask() {
     $('answer').textContent = '지역(서귀포, 제주시, 동쪽, 서쪽), 실내/야외, 유형(박물관, 오름, 바다 …) 중 하나는 넣어 주세요.';
     return;
   }
-  $('answer').textContent = '이렇게 이해했어요 → ' + parts.join(' · ');
-  const list = r.found.slice(0, MAX_KEYWORD).map((s) => ({ name: s.name, area: s.area, indoor: s.indoor, description: s.type }));
-  $('status').textContent = r.found.length
-    ? `${r.found.length}곳 찾았어요${r.found.length > MAX_KEYWORD ? ` (상위 ${MAX_KEYWORD}곳 표시)` : ''}`
-    : '조건에 맞는 장소가 목록에 없습니다. 목록 밖 장소는 없어요.';
-  showSpots(list);
+  const lines = [];
+  if (parts.length) lines.push('이렇게 이해했어요 → ' + parts.join(' · '));
+  const termText = r.terms.join(', ');
+  const condText = [...r.areas.map((a) => a[1]), r.indoor === undefined ? '' : (r.indoor ? '실내' : '야외')].filter(Boolean).join(' · ');
+  let list = r.found;
+  let status;
+  if (r.missing.length) {
+    lines.push(`✕ '${r.missing.join("', '")}'은(는) 목록에 존재하지 않습니다. 이 목록은 관광지만 담고 있어요.`);
+  }
+  if (r.missing.length && !r.terms.length) {
+    list = [];
+    status = '목록에 없는 종류입니다.';
+  } else if (r.found.length) {
+    lines.push(`✓ 목록에서 ${r.found.length}곳 찾았어요.`);
+    status = `${r.found.length}곳 찾았어요${r.found.length > MAX_KEYWORD ? ` (상위 ${MAX_KEYWORD}곳 표시)` : ''}`;
+  } else if (r.terms.length && r.alt.length) {
+    lines.push(`✕ ${condText ? condText + ' 조건에는 ' : ''}'${termText}' 유형이 목록에 없습니다.`);
+    lines.push(`참고로 '${termText}'은(는) 다른 조건에 ${r.alt.length}곳 있어요. 아래는 그 목록입니다.`);
+    list = r.alt;
+    status = `참고: 조건을 빼면 ${r.alt.length}곳`;
+  } else if (r.terms.length) {
+    lines.push(`✕ '${termText}' 유형은 목록에 존재하지 않습니다.`);
+    status = '목록에 없는 유형입니다.';
+  } else {
+    lines.push('✕ 조건에 맞는 장소가 목록에 없습니다. 목록 밖 장소는 없어요.');
+    status = '조건에 맞는 장소가 없습니다.';
+  }
+  $('answer').textContent = lines.join('\n');
+  $('status').textContent = status;
+  showSpots(list.slice(0, MAX_KEYWORD).map((s) => ({ name: s.name, area: s.area, indoor: s.indoor, description: s.type })));
 }
 $('ask').onclick = ask;
 
