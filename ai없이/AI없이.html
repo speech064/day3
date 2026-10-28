@@ -301,7 +301,7 @@ const squash = (s) => s.replace(/\s+/g, '');
 const MAX_KEYWORD = 20;
 let allSpots = [], vocab = [];
 
-fetch('/jeju_spots.json').then((r) => r.json()).then((d) => {
+fetch('/jeju_spots_legacy.json').then((r) => r.json()).then((d) => {
   allSpots = d.spots;
   vocab = [...new Set(allSpots.flatMap((s) => s.type.split(' · ')))];
 }).catch(() => {});

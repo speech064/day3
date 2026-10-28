@@ -1,5 +1,5 @@
 // find_spots / get_weather 도구 정의 + 실행 + (GET) 테스트용 엔드포인트
-const data = require('../jeju_spots.json');
+const data = require('../jeju_spots_legacy.json');
 
 const AREAS = ['동쪽', '서쪽', '서귀포', '제주시'];
 const MAX_SPOTS = 8;
@@ -93,7 +93,7 @@ const tools = [
   {
     name: 'find_spots',
     description:
-      '제주도 관광지 목록(jeju_spots.json)에서 지역과 실내/야외 조건에 맞는 장소를 최대 8곳 찾아 이름·지역·실내 여부·설명을 돌려준다. ' +
+      '제주도 관광지 목록(jeju_spots_legacy.json)에서 지역과 실내/야외 조건에 맞는 장소를 최대 8곳 찾아 이름·지역·실내 여부·설명을 돌려준다. ' +
       '목록 밖 장소는 없다. 결과에 없는 장소는 추천하거나 지어내지 말 것. 결과가 비어 있으면 없다고 답한다.',
     input_schema: {
       type: 'object',
