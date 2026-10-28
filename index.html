@@ -58,11 +58,12 @@
   .r4 { background:linear-gradient(160deg,#f6c98f,#6f5a9a); }
 
   /* planner */
-  .planner { background:var(--paper); border:1px solid var(--line); padding:36px; box-shadow:0 20px 50px -30px rgba(18,49,61,.35); }
+  .planner { background:var(--paper); border:1px solid var(--line); padding:24px; margin-bottom:20px; box-shadow:0 20px 50px -30px rgba(18,49,61,.35); }
   .seg { display:flex; gap:28px; border-bottom:1px solid var(--line); margin-bottom:28px; }
   .tab { background:none; border:0; font:inherit; font-size:14px; letter-spacing:.15em; color:var(--sub); padding:0 0 12px; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
   .tab.on { color:var(--navy); border-color:var(--gold); font-weight:500; }
-  .fields { display:grid; grid-template-columns:1fr 1fr auto; gap:16px; align-items:end; }
+  .fields { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:end; }
+  .fields button.go { grid-column:1 / -1; }
   label { display:grid; gap:6px; font-size:12px; letter-spacing:.14em; color:var(--sub); }
   select, textarea { font:inherit; font-size:15px; color:var(--ink); background:var(--ivory); border:1px solid var(--line); padding:12px 14px; width:100%; border-radius:0; }
   select:focus, textarea:focus { outline:1px solid var(--gold); border-color:var(--gold); }
@@ -97,7 +98,7 @@
   @media (max-width:900px) {
     nav, nav.solid { padding:14px 20px; } nav .links { display:none; }
     .regions { grid-template-columns:1fr 1fr; } .region { height:220px; }
-    .fields { grid-template-columns:1fr; } .planner { padding:22px; }
+    .fields { grid-template-columns:1fr; }
     .results { grid-template-columns:1fr; } #map { height:380px; order:-1; } .list { max-height:none; }
   }
 </style>
@@ -106,7 +107,7 @@
 
 <nav id="nav">
   <a class="logo" href="#top">JEJU</a>
-  <div class="links"><a href="#regions">REGIONS</a><a href="#plan">PLAN</a><a href="#results">MAP</a></div>
+  <div class="links"><a href="#regions">REGIONS</a><a href="#results">SEARCH</a></div>
 </nav>
 
 <header class="hero" id="top">
@@ -156,46 +157,41 @@
     </div>
   </section>
 
-  <section class="block" id="plan">
-    <div class="eyebrow">Plan your day</div>
-    <h2 class="title">나만의 제주 일정</h2>
-    <p class="lead">직접 조건을 고르거나, AI에게 오늘의 날씨에 맞는 추천을 맡겨보세요.</p>
-    <div class="planner">
-      <div class="seg">
-        <button class="tab on" data-t="search">직접 검색</button>
-        <button class="tab" data-t="agent">AI 추천</button>
-      </div>
-
-      <div id="search">
-        <div class="fields">
-          <label>지역
-            <select id="area"><option>제주시</option><option>서귀포</option><option>동쪽</option><option>서쪽</option></select>
-          </label>
-          <label>실내 / 야외
-            <select id="indoor"><option value="">전체</option><option value="true">실내</option><option value="false">야외</option></select>
-          </label>
-          <button class="go" id="go">장소 찾기</button>
-        </div>
-      </div>
-
-      <div id="agent" class="hidden">
-        <label>어떤 여행을 원하세요?
-          <textarea id="msg" placeholder="예: 오늘 서귀포에서 아이랑 갈 만한 곳 추천해줘"></textarea>
-        </label>
-        <button class="go" id="ask">AI에게 추천받기</button>
-        <div id="weather"></div>
-        <div id="steps"></div>
-        <div id="answer" class="answer"></div>
-      </div>
-    </div>
-  </section>
-
   <section class="block" id="results">
-    <div class="eyebrow">Your selection</div>
-    <h2 class="title">추천 장소와 지도</h2>
-    <p class="lead" style="margin-bottom:20px">&nbsp;</p>
+    <div class="eyebrow">Search</div>
+    <h2 class="title">장소 검색</h2>
+    <p class="lead">조건을 직접 고르거나, AI에게 오늘의 날씨에 맞는 추천을 맡겨보세요.</p>
     <div class="results">
       <div>
+        <div class="planner">
+          <div class="seg">
+            <button class="tab on" data-t="search">직접 검색</button>
+            <button class="tab" data-t="agent">AI 추천</button>
+          </div>
+
+          <div id="search">
+            <div class="fields">
+              <label>지역
+                <select id="area"><option>제주시</option><option>서귀포</option><option>동쪽</option><option>서쪽</option></select>
+              </label>
+              <label>실내 / 야외
+                <select id="indoor"><option value="">전체</option><option value="true">실내</option><option value="false">야외</option></select>
+              </label>
+              <button class="go" id="go">장소 찾기</button>
+            </div>
+          </div>
+
+          <div id="agent" class="hidden">
+            <label>어떤 장소를 찾으세요?
+              <textarea id="msg" placeholder="예: 오늘 서귀포에서 아이랑 갈 만한 곳 추천해줘"></textarea>
+            </label>
+            <button class="go" id="ask">AI에게 추천받기</button>
+            <div id="weather"></div>
+            <div id="steps"></div>
+            <div id="answer" class="answer"></div>
+          </div>
+        </div>
+
         <div id="status" class="status">조건을 고르고 검색하세요.</div>
         <div id="list" class="list"></div>
         <div class="note">목록에 있는 장소만 보여줍니다. 좌표가 없어 마커는 세부 지역 중심에 표시됩니다. 방문 전 운영 정보는 공식 안내로 확인하세요.</div>
