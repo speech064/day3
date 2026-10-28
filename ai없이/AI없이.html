@@ -3,86 +3,282 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제주 스팟 검색 (AI 없이)</title>
+<title>제주 스팟 맵 (AI 없이)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;500&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-  :root { --ivory:#faf7f2; --paper:#fff; --ink:#1c2a33; --sub:#6d7780; --line:#e7e0d4; --navy:#12313d; --sea:#2f6f7e; --gold:#b08d57; --gold-soft:#f3ece0;
-          --serif:"Noto Serif KR",serif; --sans:"Noto Sans KR",-apple-system,sans-serif; }
+  :root {
+    --ivory:#faf7f2; --paper:#fff; --ink:#1c2a33; --sub:#6d7780; --line:#e7e0d4;
+    --navy:#12313d; --sea:#2f6f7e; --gold:#b08d57; --gold-soft:#f3ece0;
+    --serif:"Noto Serif KR","Cormorant Garamond",serif; --sans:"Noto Sans KR",-apple-system,sans-serif;
+  }
   * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
   body { margin:0; font-family:var(--sans); font-weight:300; background:var(--ivory); color:var(--ink); line-height:1.7; }
-  .bar { background:var(--navy); padding:16px 32px; display:flex; justify-content:space-between; align-items:center; }
-  .logo { font-family:"Cormorant Garamond",serif; font-weight:600; font-size:22px; letter-spacing:.35em; color:#fff; text-decoration:none; }
-  .bar a.back { color:#fff; opacity:.85; font-size:13px; letter-spacing:.14em; text-decoration:none; }
-  .wrap { max-width:1180px; margin:0 auto; padding:48px 24px 64px; }
-  .eyebrow { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:18px; color:var(--gold); }
-  h1 { font-family:var(--serif); font-weight:500; font-size:32px; margin:4px 0 8px; }
-  .lead { color:var(--sub); margin:0 0 24px; }
-  .box { background:var(--paper); border:1px solid var(--line); padding:24px; margin-bottom:20px; box-shadow:0 20px 50px -30px rgba(18,49,61,.35); }
-  .ask { display:flex; gap:10px; }
-  input[type=text] { flex:1; font:inherit; font-size:16px; padding:13px 14px; border:1px solid var(--line); background:var(--ivory); color:var(--ink); border-radius:0; }
-  input:focus { outline:1px solid var(--gold); border-color:var(--gold); }
-  button.go { border:0; background:var(--navy); color:#fff; padding:0 28px; font:inherit; font-size:13px; letter-spacing:.2em; cursor:pointer; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 24px; }
+  .eyebrow { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:18px; color:var(--gold); letter-spacing:.04em; }
+  h2.title { font-family:var(--serif); font-weight:500; font-size:32px; margin:4px 0 8px; letter-spacing:-.01em; }
+  .lead { color:var(--sub); margin:0 0 32px; }
+
+  /* nav */
+  nav { position:fixed; inset:0 0 auto 0; z-index:10; display:flex; justify-content:space-between; align-items:center; padding:20px 40px; color:#fff; transition:background .3s, padding .3s; }
+  nav.solid { background:rgba(18,49,61,.94); padding:12px 40px; backdrop-filter:blur(6px); }
+  .logo { font-family:"Cormorant Garamond",serif; font-size:24px; font-weight:600; letter-spacing:.35em; color:#fff; text-decoration:none; }
+  nav .links a { color:#fff; text-decoration:none; font-size:13px; letter-spacing:.18em; margin-left:32px; opacity:.9; }
+  nav .links a:hover { opacity:1; border-bottom:1px solid var(--gold); }
+
+  /* hero */
+  .hero { position:relative; height:100vh; min-height:560px; overflow:hidden; background:var(--navy); color:#fff; }
+  .hero svg { position:absolute; inset:0; width:100%; height:100%; }
+  .hero .overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(10,28,36,.45), rgba(10,28,36,0) 40%, rgba(10,28,36,.35)); }
+  .hero .copy { position:absolute; left:0; right:0; top:34%; text-align:center; padding:0 24px; }
+  .hero .eyebrow { color:#f1dcb4; font-size:20px; }
+  .hero h1 { font-family:var(--serif); font-weight:300; font-size:clamp(34px,6vw,68px); line-height:1.25; margin:10px 0 14px; letter-spacing:.02em; text-shadow:0 2px 24px rgba(0,0,0,.25); }
+  .hero p { font-size:16px; opacity:.92; margin:0 0 34px; letter-spacing:.06em; }
+  .btn-line { display:inline-block; border:1px solid #fff; color:#fff; padding:14px 38px; text-decoration:none; font-size:13px; letter-spacing:.25em; transition:.25s; }
+  .btn-line:hover { background:#fff; color:var(--navy); }
+  .scroll { position:absolute; bottom:22px; left:50%; transform:translateX(-50%); font-size:11px; letter-spacing:.3em; opacity:.8; }
+
+  section.block { padding:88px 0 24px; }
+
+  /* regions */
+  .regions { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .region { position:relative; height:340px; padding:24px; color:#fff; display:flex; flex-direction:column; justify-content:flex-end; text-align:left; border:0; font:inherit; cursor:pointer; overflow:hidden; transition:transform .35s; }
+  .region::after { content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.5), transparent 60%); }
+  .region:hover { transform:translateY(-6px); }
+  .region > * { position:relative; z-index:1; }
+  .region .en { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:16px; opacity:.9; }
+  .region .ko { font-family:var(--serif); font-size:26px; font-weight:500; }
+  .region .tx { font-size:13px; opacity:.9; margin-top:4px; }
+  /* live weather */
+  .wx { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .wx-card { background:var(--paper); border:1px solid var(--line); padding:16px 18px; text-align:left; font:inherit; color:inherit; cursor:pointer; display:grid; grid-template-columns:auto 1fr; align-items:center; column-gap:8px; transition:.25s; }
+  .wx-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+  .wx-card img { width:56px; height:56px; grid-row:1 / 3; margin:-6px 0; }
+  .wx-card .area { font-size:12px; letter-spacing:.16em; color:var(--sub); }
+  .wx-card .temp { font-family:var(--serif); font-size:30px; font-weight:500; line-height:1.1; }
+  .wx-card .meta2 { grid-column:1 / -1; margin-top:8px; padding-top:8px; border-top:1px solid var(--line); font-size:12px; color:var(--sub); }
+  .wxm { display:flex; align-items:center; gap:2px; width:max-content; background:#fff; border:1px solid var(--line); border-radius:99px; padding:1px 10px 1px 2px; font-size:13px; font-weight:500; color:var(--navy); box-shadow:0 2px 8px rgba(0,0,0,.2); }
+  .wxm img { width:28px; height:28px; }
+  .r1 { background:linear-gradient(160deg,#6aa0b4,#1d4b5e); }
+  .r2 { background:linear-gradient(160deg,#f2c27b,#d9714b); }
+  .r3 { background:linear-gradient(160deg,#f3b6a0,#b0587a); }
+  .r4 { background:linear-gradient(160deg,#f6c98f,#6f5a9a); }
+
+  /* planner */
+  .planner { background:var(--paper); border:1px solid var(--line); padding:24px; margin-bottom:20px; box-shadow:0 20px 50px -30px rgba(18,49,61,.35); }
+  .seg { display:flex; gap:28px; border-bottom:1px solid var(--line); margin-bottom:28px; }
+  .tab { background:none; border:0; font:inherit; font-size:14px; letter-spacing:.15em; color:var(--sub); padding:0 0 12px; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab.on { color:var(--navy); border-color:var(--gold); font-weight:500; }
+  .fields { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:end; }
+  .fields button.go { grid-column:1 / -1; }
+  label { display:grid; gap:6px; font-size:12px; letter-spacing:.14em; color:var(--sub); }
+  select, textarea { font:inherit; font-size:15px; color:var(--ink); background:var(--ivory); border:1px solid var(--line); padding:12px 14px; width:100%; border-radius:0; }
+  select:focus, textarea:focus { outline:1px solid var(--gold); border-color:var(--gold); }
+  textarea { min-height:90px; resize:vertical; }
+  button.go { border:0; background:var(--navy); color:#fff; padding:14px 34px; font:inherit; font-size:13px; letter-spacing:.22em; cursor:pointer; transition:.25s; }
   button.go:hover { background:var(--gold); }
-  .chips { margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }
-  .chip { border:1px solid var(--line); background:var(--ivory); padding:4px 12px; font:inherit; font-size:13px; color:var(--sub); cursor:pointer; border-radius:99px; }
-  .chip:hover { border-color:var(--gold); color:var(--navy); }
-  .layout { display:grid; grid-template-columns:400px 1fr; gap:24px; align-items:start; }
-  .read { font-size:13px; color:var(--sea); margin-bottom:6px; letter-spacing:.03em; }
-  .status { font-size:13px; color:var(--sub); margin-bottom:14px; }
+  button.go:disabled { opacity:.5; cursor:wait; }
+  #ask { margin-top:16px; }
+  .hidden { display:none; }
+  .weather { display:flex; flex-wrap:wrap; gap:6px 22px; margin-top:20px; padding:14px 18px; background:var(--gold-soft); font-size:14px; }
+  .step { font-size:12px; color:var(--sub); padding:6px 0; border-bottom:1px dashed var(--line); word-break:break-all; }
+  .step b { color:var(--sea); font-weight:500; }
+  .answer { white-space:pre-wrap; margin-top:16px; font-size:15px; }
+
+  /* results */
+  .results { display:grid; grid-template-columns:400px 1fr; gap:24px; align-items:start; }
+  .status { font-size:13px; color:var(--sub); letter-spacing:.04em; margin-bottom:14px; }
   .list { display:grid; gap:12px; max-height:560px; overflow:auto; padding-right:4px; }
   .spot { background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--gold); padding:14px 16px; }
   .spot b { font-family:var(--serif); font-weight:500; font-size:17px; }
-  .meta { font-size:12px; letter-spacing:.08em; color:var(--sea); }
+  .meta { margin-top:2px; font-size:12px; letter-spacing:.08em; color:var(--sea); }
   .meta .dot { color:var(--gold); margin:0 6px; }
-  .desc { font-size:13px; color:var(--sub); }
+  .desc { font-size:13px; color:var(--sub); margin-top:4px; }
   .note { font-size:12px; color:var(--sub); margin-top:14px; }
   #map { height:600px; border:1px solid var(--line); z-index:0; }
   .pin { width:18px; height:18px; border-radius:50%; background:var(--gold); border:3px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.35); }
   .err { color:#b4322d; }
-  @media (max-width:900px) { .layout { grid-template-columns:1fr; } #map { height:360px; order:-1; } .list { max-height:none; } .ask { flex-direction:column; } button.go { padding:13px; } }
+
+  footer { margin-top:88px; background:var(--navy); color:#c9d3d8; text-align:center; padding:48px 24px; font-size:13px; letter-spacing:.08em; }
+  footer .logo { display:block; margin-bottom:12px; }
+
+  @media (max-width:900px) {
+    nav, nav.solid { padding:14px 20px; } nav .links { display:none; }
+    .regions { grid-template-columns:1fr 1fr; } .region { height:220px; }
+    .fields { grid-template-columns:1fr; }
+    .results { grid-template-columns:1fr; } #map { height:380px; order:-1; } .list { max-height:none; }
+  }
 </style>
 </head>
 <body>
-<div class="bar"><a class="logo" href="../index.html">JEJU</a><a class="back" href="../index.html">← 메인으로</a></div>
 
-<div class="wrap">
-  <div class="eyebrow">Search without AI</div>
-  <h1>말하듯 검색하세요</h1>
-  <p class="lead">지역·실내/야외·유형 키워드를 찾아 목록에서 그대로 골라드립니다. AI도 API 키도 필요 없습니다.</p>
+<nav id="nav">
+  <a class="logo" href="#top">JEJU</a>
+  <div class="links"><a href="#regions">REGIONS</a><a href="#results">SEARCH</a></div>
+</nav>
 
-  <div class="box">
-    <div class="ask">
-      <input type="text" id="q" placeholder="예: 서귀포에 갈만한 실내 박물관" autocomplete="off">
-      <button class="go" id="go">검색</button>
-    </div>
-    <div class="chips" id="chips"></div>
+<header class="hero" id="top">
+  <svg viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1d4b5e"/><stop offset=".45" stop-color="#7fb0b8"/>
+        <stop offset=".72" stop-color="#f1d9b5"/><stop offset="1" stop-color="#f6c995"/>
+      </linearGradient>
+      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4f8f9b"/><stop offset="1" stop-color="#12313d"/>
+      </linearGradient>
+      <radialGradient id="sun"><stop offset="0" stop-color="#fff4d6"/><stop offset="1" stop-color="#fff4d6" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="1440" height="800" fill="url(#sky)"/>
+    <circle cx="1060" cy="470" r="220" fill="url(#sun)"/>
+    <circle cx="1060" cy="470" r="46" fill="#fff6dc"/>
+    <path d="M0 600 L260 560 L480 585 L640 470 Q720 400 800 470 L980 585 L1200 555 L1440 590 L1440 650 L0 650Z" fill="#46747f" opacity=".55"/>
+    <path d="M0 640 L180 610 L420 632 L620 520 Q700 455 780 520 L960 632 L1220 606 L1440 636 L1440 700 L0 700Z" fill="#2c5967" opacity=".85"/>
+    <path d="M0 690 Q360 660 720 690 T1440 690 L1440 800 L0 800Z" fill="url(#sea)"/>
+    <g stroke="#fff" stroke-opacity=".35" stroke-width="2" fill="none">
+      <path d="M120 730 q40 -10 80 0 t80 0"/><path d="M520 750 q50 -12 100 0 t100 0"/>
+      <path d="M980 725 q40 -10 80 0 t80 0"/><path d="M1180 765 q50 -12 100 0 t100 0"/>
+      <path d="M300 780 q40 -8 80 0 t80 0"/>
+    </g>
+  </svg>
+  <div class="overlay"></div>
+  <div class="copy">
+    <div class="eyebrow">Island of Wind, Stone &amp; Sea</div>
+    <h1>제주에서 보내는<br>가장 아름다운 하루</h1>
+    <p>지역과 날씨에 맞춰 오늘 머물 곳을 찾아드립니다</p>
+    <a class="btn-line" href="#regions">여행 시작하기</a>
   </div>
+  <div class="scroll">SCROLL</div>
+</header>
 
-  <div class="layout">
-    <div>
-      <div class="read" id="read"></div>
-      <div class="status" id="status">검색어를 입력해 보세요.</div>
-      <div class="list" id="list"></div>
-      <div class="note">목록(jeju_spots.json)에 있는 장소만 보여줍니다. 목록 밖 장소는 없습니다. 좌표가 없어 마커는 세부 지역 중심에 표시됩니다.</div>
+<main class="wrap">
+  <section class="block" id="weather" hidden>
+    <div class="eyebrow">Live weather</div>
+    <h2 class="title">지금 제주 날씨</h2>
+    <p class="lead">지역을 누르면 지도에서 날씨를 볼 수 있습니다.</p>
+    <div class="wx" id="wx"></div>
+  </section>
+
+  <section class="block" id="regions">
+    <div class="eyebrow">Discover</div>
+    <h2 class="title">어디로 떠나시겠어요?</h2>
+    <p class="lead">지역을 선택하면 제주의 명소를 바로 펼쳐 보여드립니다.</p>
+    <div class="regions">
+      <button class="region r1" data-area="제주시"><span class="en">Jeju City</span><span class="ko">제주시</span><span class="tx">공항과 가까운 도심, 바다와 시장</span></button>
+      <button class="region r2" data-area="서귀포"><span class="en">Seogwipo</span><span class="ko">서귀포</span><span class="tx">폭포와 해안, 남쪽의 온화함</span></button>
+      <button class="region r3" data-area="동쪽"><span class="en">East</span><span class="ko">동쪽</span><span class="tx">성산 일출과 구좌의 해변</span></button>
+      <button class="region r4" data-area="서쪽"><span class="en">West</span><span class="ko">서쪽</span><span class="tx">한림·안덕, 노을이 아름다운 곳</span></button>
     </div>
-    <div id="map"></div>
-  </div>
-</div>
+  </section>
+
+  <section class="block" id="results">
+    <div class="eyebrow">Search</div>
+    <h2 class="title">장소 검색</h2>
+    <p class="lead">조건을 직접 고르거나, 문장으로 적으면 키워드를 찾아 목록에서 골라드립니다. (AI 없음)</p>
+    <div class="results">
+      <div>
+        <div class="planner">
+          <div class="seg">
+            <button class="tab on" data-t="search">직접 검색</button>
+            <button class="tab" data-t="agent">키워드 추천</button>
+          </div>
+
+          <div id="search">
+            <div class="fields">
+              <label>지역
+                <select id="area"><option>제주시</option><option>서귀포</option><option>동쪽</option><option>서쪽</option></select>
+              </label>
+              <label>실내 / 야외
+                <select id="indoor"><option value="">전체</option><option value="true">실내</option><option value="false">야외</option></select>
+              </label>
+              <button class="go" id="go">장소 찾기</button>
+            </div>
+          </div>
+
+          <div id="agent" class="hidden">
+            <label>어떤 장소를 찾으세요?
+              <textarea id="msg" placeholder="예: 서귀포에 갈만한 실내 박물관"></textarea>
+            </label>
+            <button class="go" id="ask">키워드로 추천받기</button>
+            <div id="answer" class="answer"></div>
+          </div>
+        </div>
+
+        <div id="status" class="status">조건을 고르고 검색하세요.</div>
+        <div id="list" class="list"></div>
+        <div class="note">목록에 있는 장소만 보여줍니다. 좌표가 없어 마커는 세부 지역 중심에 표시됩니다. 방문 전 운영 정보는 공식 안내로 확인하세요.</div>
+      </div>
+      <div id="map"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="logo">JEJU</span>
+  제주 관광지 목록 기반 · 날씨 Open-Meteo · 지도 OpenStreetMap
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
+const CENTERS = {
+  '동쪽(성산)': [33.4580, 126.9425], '동쪽(구좌)': [33.5560, 126.8600],
+  '제주시': [33.4996, 126.5312],
+  '서쪽(한림)': [33.4140, 126.2650], '서쪽(안덕)': [33.2600, 126.3200],
+  '서귀포': [33.2541, 126.5601],
+};
+const map = L.map('map', { scrollWheelZoom: false }).setView([33.38, 126.55], 10);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18, attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+const pin = L.divIcon({ className: '', html: '<div class="pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9], popupAnchor: [0, -10] });
+let layer = L.layerGroup().addTo(map);
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const MAX = 20;
 
-const CENTERS = {
-  '동쪽(성산)': [33.4580, 126.9425], '동쪽(구좌)': [33.5560, 126.8600], '제주시': [33.4996, 126.5312],
-  '서쪽(한림)': [33.4140, 126.2650], '서쪽(안덕)': [33.2600, 126.3200], '서귀포': [33.2541, 126.5601],
-};
-// 지역 키워드 → 판별 함수 (jeju_spots.json의 area_rule 기준)
+const nav = $('nav');
+const onScroll = () => nav.classList.toggle('solid', window.scrollY > window.innerHeight * 0.6);
+window.addEventListener('scroll', onScroll); onScroll();
+
+function showSpots(spots) {
+  layer.clearLayers();
+  $('list').innerHTML = spots.map((s) => `
+    <div class="spot"><b>${esc(s.name)}</b>
+      <div class="meta">${esc(s.area)}<span class="dot">·</span>${s.indoor ? '실내' : '야외'}</div>
+      <div class="desc">${esc(s.description)}</div></div>`).join('');
+  const byArea = {};
+  spots.forEach((s) => (byArea[s.area] = byArea[s.area] || []).push(s));
+  const pts = [];
+  for (const [a, items] of Object.entries(byArea)) {
+    const c = CENTERS[a];
+    if (!c) continue;
+    pts.push(c);
+    L.marker(c, { icon: pin }).addTo(layer).bindPopup(`<b>${esc(a)}</b><br>` + items.map((s) => esc(s.name)).join('<br>'));
+  }
+  if (pts.length) map.fitBounds(pts, { padding: [50, 50], maxZoom: 11 });
+}
+
+async function search() {
+  $('go').disabled = true;
+  $('status').textContent = '검색 중…';
+  const p = new URLSearchParams({ tool: 'find_spots', area: $('area').value });
+  if ($('indoor').value) p.set('indoor', $('indoor').value);
+  try {
+    const r = await fetch('/api/tool?' + p);
+    const j = await r.json();
+    if (j.error) throw new Error(j.error);
+    $('status').textContent = j.spots.length ? `조건에 맞는 ${j.total_matched}곳 중 ${j.spots.length}곳` : '조건에 맞는 장소가 목록에 없습니다.';
+    showSpots(j.spots);
+  } catch (e) {
+    $('status').innerHTML = `<span class="err">오류: ${esc(e.message)}</span>`;
+  }
+  $('go').disabled = false;
+}
+$('go').onclick = search;
+
+// ── 키워드 추천: AI/API 키 없이 질문에서 지역·실내/야외·유형을 뽑아 목록에서 고른다 ──
 const AREA_KW = [
   [['서귀포', '중문', '대정', '남원', '표선'], '서귀포', (s) => s.area === '서귀포'],
   [['제주시', '애월', '조천', '함덕', '한경', '우도', '추자', '공항'], '제주시', (s) => s.area === '제주시'],
@@ -93,21 +289,22 @@ const AREA_KW = [
   [['한림'], '한림', (s) => s.area.includes('한림')],
   [['안덕'], '안덕', (s) => s.area.includes('안덕')],
 ];
-// 유사어 → 목록의 유형 단어
+const KIDS = ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'];
 const SYNONYMS = {
   해변: ['바다'], 바닷가: ['바다'], 해수욕장: ['바다'], 산책로: ['산책'], 갤러리: ['미술관'], 전시관: ['전시'],
-  절: ['사찰'], 해안: ['해안도로'], 트레킹: ['올레길'], 등산: ['등산'], 시장: ['시장'],
-  아이: ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'],
-  아이들: ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'],
-  키즈: ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'],
-  어린이: ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'],
+  절: ['사찰'], 해안: ['해안도로'], 트레킹: ['올레길'], 아이: KIDS, 아이들: KIDS, 키즈: KIDS, 어린이: KIDS,
 };
 const STOP_JOSA = /(에서|으로|에는|이나|에|을|를|은|는|이|가|도|로|의|만|좀)$/;
-const norm = (s) => s.replace(/\s+/g, '');
+const squash = (s) => s.replace(/\s+/g, '');
+const MAX_KEYWORD = 20;
+let allSpots = [], vocab = [];
 
-let spots = [], vocab = [];
+fetch('/jeju_spots.json').then((r) => r.json()).then((d) => {
+  allSpots = d.spots;
+  vocab = [...new Set(allSpots.flatMap((s) => s.type.split(' · ')))];
+}).catch(() => {});
 
-function parse(q) {
+function parseQuery(q) {
   const areas = AREA_KW.filter(([kws]) => kws.some((k) => q.includes(k)));
   const wantIn = /실내|안에서|우천|비\s?오|비올/.test(q);
   const wantOut = /야외|바깥|밖에/.test(q);
@@ -121,85 +318,94 @@ function parse(q) {
   return { areas, indoor, terms: [...terms] };
 }
 
-function run(q) {
-  const { areas, indoor, terms } = parse(q);
-  const nq = norm(q);
-  const byName = spots.filter((s) => nq.includes(norm(s.name)));
+function keywordSearch(q) {
+  const { areas, indoor, terms } = parseQuery(q);
+  const nq = squash(q);
+  const byName = allSpots.filter((s) => nq.includes(squash(s.name)));
   const hasCond = areas.length || indoor !== undefined || terms.length;
   let found;
-  if (byName.length && !hasCond) {
-    found = byName.map((s) => ({ s, score: 99 }));
+  if (byName.length) {
+    found = byName;
   } else {
-    found = spots
+    found = allSpots
       .filter((s) => (!areas.length || areas.some(([, , f]) => f(s))) && (indoor === undefined || s.indoor === indoor))
-      .map((s) => {
-        const ts = s.type.split(' · ');
-        return { s, score: terms.filter((t) => ts.includes(t)).length };
-      })
+      .map((s) => ({ s, score: terms.filter((t) => s.type.split(' · ').includes(t)).length }))
       .filter((x) => !terms.length || x.score > 0)
-      .sort((a, b) => b.score - a.score);
+      .sort((a, b) => b.score - a.score)
+      .map((x) => x.s);
   }
-  return { found, areas, indoor, terms, hasCond: hasCond || byName.length };
+  return { found, areas, indoor, terms, ok: hasCond || byName.length > 0 };
 }
 
-const map = L.map('map', { scrollWheelZoom: false }).setView([33.38, 126.55], 10);
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
-const pin = L.divIcon({ className: '', html: '<div class="pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9], popupAnchor: [0, -10] });
-const layer = L.layerGroup().addTo(map);
-
-function render(list) {
-  layer.clearLayers();
-  $('list').innerHTML = list.map((s) => `
-    <div class="spot"><b>${esc(s.name)}</b>
-      <div class="meta">${esc(s.area)}<span class="dot">·</span>${s.indoor ? '실내' : '야외'}</div>
-      <div class="desc">${esc(s.type)}</div></div>`).join('');
-  const byArea = {};
-  list.forEach((s) => (byArea[s.area] = byArea[s.area] || []).push(s));
-  const pts = [];
-  for (const [a, items] of Object.entries(byArea)) {
-    const c = CENTERS[a];
-    if (!c) continue;
-    pts.push(c);
-    L.marker(c, { icon: pin }).addTo(layer).bindPopup(`<b>${esc(a)}</b><br>` + items.map((s) => esc(s.name)).join('<br>'));
-  }
-  if (pts.length) map.fitBounds(pts, { padding: [50, 50], maxZoom: 11 });
-}
-
-function search(q) {
-  q = q.trim();
+function ask() {
+  const q = $('msg').value.trim();
   if (!q) return;
-  const r = run(q);
+  if (!allSpots.length) { $('answer').innerHTML = '<span class="err">목록을 아직 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</span>'; return; }
+  const r = keywordSearch(q);
   const parts = [];
   if (r.areas.length) parts.push('지역: ' + r.areas.map((a) => a[1]).join(', '));
   if (r.indoor !== undefined) parts.push(r.indoor ? '실내' : '야외');
   if (r.terms.length) parts.push('유형: ' + r.terms.join(', '));
-  $('read').textContent = parts.length ? '이렇게 이해했어요 → ' + parts.join(' · ') : '';
-  if (!r.hasCond) {
-    $('status').textContent = '지역(서귀포, 제주시, 동쪽, 서쪽), 실내/야외, 유형(박물관, 오름, 바다 …) 중 하나는 넣어 주세요.';
-    render([]);
+  if (!r.ok) {
+    $('answer').textContent = '지역(서귀포, 제주시, 동쪽, 서쪽), 실내/야외, 유형(박물관, 오름, 바다 …) 중 하나는 넣어 주세요.';
     return;
   }
-  const list = r.found.slice(0, MAX).map((x) => x.s);
+  $('answer').textContent = '이렇게 이해했어요 → ' + parts.join(' · ');
+  const list = r.found.slice(0, MAX_KEYWORD).map((s) => ({ name: s.name, area: s.area, indoor: s.indoor, description: s.type }));
   $('status').textContent = r.found.length
-    ? `${r.found.length}곳 찾았어요${r.found.length > MAX ? ` (상위 ${MAX}곳 표시)` : ''}`
+    ? `${r.found.length}곳 찾았어요${r.found.length > MAX_KEYWORD ? ` (상위 ${MAX_KEYWORD}곳 표시)` : ''}`
     : '조건에 맞는 장소가 목록에 없습니다. 목록 밖 장소는 없어요.';
-  render(list);
+  showSpots(list);
 }
+$('ask').onclick = ask;
 
-$('go').onclick = () => search($('q').value);
-$('q').addEventListener('keydown', (e) => { if (e.key === 'Enter') search($('q').value); });
-['서귀포에 갈만한 실내 박물관', '제주시 야외 오름', '동쪽 바다 산책', '서쪽 전시', '아이랑 가기 좋은 곳'].forEach((t) => {
-  const b = document.createElement('button');
-  b.className = 'chip'; b.textContent = t;
-  b.onclick = () => { $('q').value = t; search(t); };
-  $('chips').appendChild(b);
-});
+// 실시간 날씨: 카드 + 지도 배지 (실패하면 섹션을 숨긴 채 둠)
+const wxLayer = L.layerGroup().addTo(map);
+L.control.layers(null, { '실시간 날씨': wxLayer }, { collapsed: false }).addTo(map);
+const wxMarkers = {};
+const wxIcon = (w) => `https://openweathermap.org/img/wn/${esc(w.icon)}@2x.png`;
+fetch('/api/live').then((r) => r.ok ? r.json() : null).then((d) => {
+  if (!d) return;
+  $('wx').innerHTML = Object.entries(d).map(([a, w]) => `
+    <button class="wx-card" data-wx="${esc(a)}">
+      <img src="${wxIcon(w)}" alt="">
+      <span class="area">${esc(a)}</span>
+      <span class="temp">${w.temp_c}°C</span>
+      <span class="meta2">${esc(w.description)} · 체감 ${w.feels_like_c}° · 습도 ${w.humidity}% · 바람 ${w.wind_ms}m/s</span>
+    </button>`).join('');
+  $('weather').hidden = false;
+  Object.entries(d).forEach(([a, w]) => {
+    wxMarkers[a] = L.marker([w.lat, w.lon], {
+      zIndexOffset: -100,
+      icon: L.divIcon({ className: '', iconSize: [0, 0], iconAnchor: [40, 46],
+        html: `<div class="wxm"><img src="${wxIcon(w)}" alt="">${w.temp_c}°</div>` })
+    }).addTo(wxLayer).bindPopup(
+      `<b>${esc(a)}</b><br>${esc(w.description)} ${w.temp_c}°C<br>체감 ${w.feels_like_c}° · 습도 ${w.humidity}% · 바람 ${w.wind_ms}m/s`);
+  });
+  document.querySelectorAll('.wx-card').forEach((b) => b.onclick = () => {
+    $('results').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      map.invalidateSize();
+      const m = wxMarkers[b.dataset.wx];
+      map.setView(m.getLatLng(), 11);
+      m.openPopup();
+    }, 500);
+  });
+}).catch(() => {});
 
-fetch('../jeju_spots.json').then((r) => r.json()).then((d) => {
-  spots = d.spots;
-  vocab = [...new Set(spots.flatMap((s) => s.type.split(' · ')))];
-}).catch(() => {
-  $('status').innerHTML = '<span class="err">jeju_spots.json을 불러오지 못했습니다. 파일을 직접 열지 말고 서버(배포 주소)로 열어 주세요.</span>';
+function setTab(name) {
+  document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('on', x.dataset.t === name));
+  $('search').classList.toggle('hidden', name !== 'search');
+  $('agent').classList.toggle('hidden', name !== 'agent');
+}
+document.querySelectorAll('.tab').forEach((b) => b.onclick = () => setTab(b.dataset.t));
+
+document.querySelectorAll('.region').forEach((b) => b.onclick = () => {
+  $('area').value = b.dataset.area;
+  setTab('search');
+  search();
+  $('results').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => map.invalidateSize(), 400);
 });
 </script>
 </body>

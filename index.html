@@ -203,7 +203,7 @@
               <textarea id="msg" placeholder="예: 오늘 서귀포에서 아이랑 갈 만한 곳 추천해줘"></textarea>
             </label>
             <button class="go" id="ask">AI에게 추천받기</button>
-            <div id="weather"></div>
+            <div id="agentWeather"></div>
             <div id="steps"></div>
             <div id="answer" class="answer"></div>
           </div>
@@ -284,7 +284,7 @@ async function ask() {
   const message = $('msg').value.trim();
   if (!message) return;
   $('ask').disabled = true;
-  $('weather').innerHTML = $('steps').innerHTML = '';
+  $('agentWeather').innerHTML = $('steps').innerHTML = '';
   $('answer').textContent = '에이전트가 도구를 고르는 중…';
   try {
     const r = await fetch('/api/agent', {
@@ -296,7 +296,7 @@ async function ask() {
       `<div class="step">${i + 1}. <b>${esc(s.tool)}</b> ${esc(JSON.stringify(s.input))}</div>`).join('');
     if (j.weather) {
       const w = j.weather, t = w.today;
-      $('weather').innerHTML = `<div class="weather"><span>${esc(w.area)} · ${esc(w.condition)} ${w.temperature_c}°C</span>
+      $('agentWeather').innerHTML = `<div class="weather"><span>${esc(w.area)} · ${esc(w.condition)} ${w.temperature_c}°C</span>
         <span>${t.min_c}~${t.max_c}°C</span><span>강수확률 ${t.rain_probability_pct}%</span><span>UV ${t.uv_index_max}</span>
         <span>일출 ${esc(t.sunrise.slice(11))} · 일몰 ${esc(t.sunset.slice(11))}</span></div>`;
     }
