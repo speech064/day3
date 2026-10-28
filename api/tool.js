@@ -154,3 +154,4 @@ module.exports.getWeather = getWeather;
 module.exports.runTool = runTool;
 module.exports.tools = tools;
 module.exports.AREAS = AREAS;
+module.exports.AREA_COORDS = AREA_COORDS;

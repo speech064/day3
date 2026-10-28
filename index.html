@@ -52,6 +52,8 @@
   .region .en { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:16px; opacity:.9; }
   .region .ko { font-family:var(--serif); font-size:26px; font-weight:500; }
   .region .tx { font-size:13px; opacity:.9; margin-top:4px; }
+  .region .live { margin-top:10px; padding-top:8px; border-top:1px solid rgba(255,255,255,.35); font-size:13px; letter-spacing:.04em; }
+  .region .live:empty { display:none; }
   .r1 { background:linear-gradient(160deg,#6aa0b4,#1d4b5e); }
   .r2 { background:linear-gradient(160deg,#f2c27b,#d9714b); }
   .r3 { background:linear-gradient(160deg,#f3b6a0,#b0587a); }
@@ -150,10 +152,10 @@
     <h2 class="title">어디로 떠나시겠어요?</h2>
     <p class="lead">지역을 선택하면 제주의 명소를 바로 펼쳐 보여드립니다.</p>
     <div class="regions">
-      <button class="region r1" data-area="제주시"><span class="en">Jeju City</span><span class="ko">제주시</span><span class="tx">공항과 가까운 도심, 바다와 시장</span></button>
-      <button class="region r2" data-area="서귀포"><span class="en">Seogwipo</span><span class="ko">서귀포</span><span class="tx">폭포와 해안, 남쪽의 온화함</span></button>
-      <button class="region r3" data-area="동쪽"><span class="en">East</span><span class="ko">동쪽</span><span class="tx">성산 일출과 구좌의 해변</span></button>
-      <button class="region r4" data-area="서쪽"><span class="en">West</span><span class="ko">서쪽</span><span class="tx">한림·안덕, 노을이 아름다운 곳</span></button>
+      <button class="region r1" data-area="제주시"><span class="en">Jeju City</span><span class="ko">제주시</span><span class="tx">공항과 가까운 도심, 바다와 시장</span><span class="live" data-live="제주시"></span></button>
+      <button class="region r2" data-area="서귀포"><span class="en">Seogwipo</span><span class="ko">서귀포</span><span class="tx">폭포와 해안, 남쪽의 온화함</span><span class="live" data-live="서귀포"></span></button>
+      <button class="region r3" data-area="동쪽"><span class="en">East</span><span class="ko">동쪽</span><span class="tx">성산 일출과 구좌의 해변</span><span class="live" data-live="동쪽"></span></button>
+      <button class="region r4" data-area="서쪽"><span class="en">West</span><span class="ko">서쪽</span><span class="tx">한림·안덕, 노을이 아름다운 곳</span><span class="live" data-live="서쪽"></span></button>
     </div>
   </section>
 
@@ -291,6 +293,15 @@ async function ask() {
   $('ask').disabled = false;
 }
 $('ask').onclick = ask;
+
+// 지역 타일에 실시간 날씨 표시 (실패하면 조용히 숨김)
+fetch('/api/live').then((r) => r.ok ? r.json() : null).then((d) => {
+  if (!d) return;
+  document.querySelectorAll('[data-live]').forEach((el) => {
+    const w = d[el.dataset.live];
+    if (w) el.textContent = `지금 ${w.temp_c}°C · ${w.description} · 습도 ${w.humidity}%`;
+  });
+}).catch(() => {});
 
 function setTab(name) {
   document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('on', x.dataset.t === name));
