@@ -52,8 +52,16 @@
   .region .en { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:16px; opacity:.9; }
   .region .ko { font-family:var(--serif); font-size:26px; font-weight:500; }
   .region .tx { font-size:13px; opacity:.9; margin-top:4px; }
-  .region .live { margin-top:10px; padding-top:8px; border-top:1px solid rgba(255,255,255,.35); font-size:13px; letter-spacing:.04em; }
-  .region .live:empty { display:none; }
+  /* live weather */
+  .wx { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .wx-card { background:var(--paper); border:1px solid var(--line); padding:16px 18px; text-align:left; font:inherit; color:inherit; cursor:pointer; display:grid; grid-template-columns:auto 1fr; align-items:center; column-gap:8px; transition:.25s; }
+  .wx-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+  .wx-card img { width:56px; height:56px; grid-row:1 / 3; margin:-6px 0; }
+  .wx-card .area { font-size:12px; letter-spacing:.16em; color:var(--sub); }
+  .wx-card .temp { font-family:var(--serif); font-size:30px; font-weight:500; line-height:1.1; }
+  .wx-card .meta2 { grid-column:1 / -1; margin-top:8px; padding-top:8px; border-top:1px solid var(--line); font-size:12px; color:var(--sub); }
+  .wxm { display:flex; align-items:center; gap:2px; width:max-content; background:#fff; border:1px solid var(--line); border-radius:99px; padding:1px 10px 1px 2px; font-size:13px; font-weight:500; color:var(--navy); box-shadow:0 2px 8px rgba(0,0,0,.2); }
+  .wxm img { width:28px; height:28px; }
   .r1 { background:linear-gradient(160deg,#6aa0b4,#1d4b5e); }
   .r2 { background:linear-gradient(160deg,#f2c27b,#d9714b); }
   .r3 { background:linear-gradient(160deg,#f3b6a0,#b0587a); }
@@ -147,15 +155,22 @@
 </header>
 
 <main class="wrap">
+  <section class="block" id="weather" hidden>
+    <div class="eyebrow">Live weather</div>
+    <h2 class="title">지금 제주 날씨</h2>
+    <p class="lead">지역을 누르면 지도에서 날씨를 볼 수 있습니다.</p>
+    <div class="wx" id="wx"></div>
+  </section>
+
   <section class="block" id="regions">
     <div class="eyebrow">Discover</div>
     <h2 class="title">어디로 떠나시겠어요?</h2>
     <p class="lead">지역을 선택하면 제주의 명소를 바로 펼쳐 보여드립니다.</p>
     <div class="regions">
-      <button class="region r1" data-area="제주시"><span class="en">Jeju City</span><span class="ko">제주시</span><span class="tx">공항과 가까운 도심, 바다와 시장</span><span class="live" data-live="제주시"></span></button>
-      <button class="region r2" data-area="서귀포"><span class="en">Seogwipo</span><span class="ko">서귀포</span><span class="tx">폭포와 해안, 남쪽의 온화함</span><span class="live" data-live="서귀포"></span></button>
-      <button class="region r3" data-area="동쪽"><span class="en">East</span><span class="ko">동쪽</span><span class="tx">성산 일출과 구좌의 해변</span><span class="live" data-live="동쪽"></span></button>
-      <button class="region r4" data-area="서쪽"><span class="en">West</span><span class="ko">서쪽</span><span class="tx">한림·안덕, 노을이 아름다운 곳</span><span class="live" data-live="서쪽"></span></button>
+      <button class="region r1" data-area="제주시"><span class="en">Jeju City</span><span class="ko">제주시</span><span class="tx">공항과 가까운 도심, 바다와 시장</span></button>
+      <button class="region r2" data-area="서귀포"><span class="en">Seogwipo</span><span class="ko">서귀포</span><span class="tx">폭포와 해안, 남쪽의 온화함</span></button>
+      <button class="region r3" data-area="동쪽"><span class="en">East</span><span class="ko">동쪽</span><span class="tx">성산 일출과 구좌의 해변</span></button>
+      <button class="region r4" data-area="서쪽"><span class="en">West</span><span class="ko">서쪽</span><span class="tx">한림·안덕, 노을이 아름다운 곳</span></button>
     </div>
   </section>
 
@@ -294,12 +309,37 @@ async function ask() {
 }
 $('ask').onclick = ask;
 
-// 지역 타일에 실시간 날씨 표시 (실패하면 조용히 숨김)
+// 실시간 날씨: 카드 + 지도 배지 (실패하면 섹션을 숨긴 채 둠)
+const wxLayer = L.layerGroup().addTo(map);
+L.control.layers(null, { '실시간 날씨': wxLayer }, { collapsed: false }).addTo(map);
+const wxMarkers = {};
+const wxIcon = (w) => `https://openweathermap.org/img/wn/${esc(w.icon)}@2x.png`;
 fetch('/api/live').then((r) => r.ok ? r.json() : null).then((d) => {
   if (!d) return;
-  document.querySelectorAll('[data-live]').forEach((el) => {
-    const w = d[el.dataset.live];
-    if (w) el.textContent = `지금 ${w.temp_c}°C · ${w.description} · 습도 ${w.humidity}%`;
+  $('wx').innerHTML = Object.entries(d).map(([a, w]) => `
+    <button class="wx-card" data-wx="${esc(a)}">
+      <img src="${wxIcon(w)}" alt="">
+      <span class="area">${esc(a)}</span>
+      <span class="temp">${w.temp_c}°C</span>
+      <span class="meta2">${esc(w.description)} · 체감 ${w.feels_like_c}° · 습도 ${w.humidity}% · 바람 ${w.wind_ms}m/s</span>
+    </button>`).join('');
+  $('weather').hidden = false;
+  Object.entries(d).forEach(([a, w]) => {
+    wxMarkers[a] = L.marker([w.lat, w.lon], {
+      zIndexOffset: -100,
+      icon: L.divIcon({ className: '', iconSize: [0, 0], iconAnchor: [40, 46],
+        html: `<div class="wxm"><img src="${wxIcon(w)}" alt="">${w.temp_c}°</div>` })
+    }).addTo(wxLayer).bindPopup(
+      `<b>${esc(a)}</b><br>${esc(w.description)} ${w.temp_c}°C<br>체감 ${w.feels_like_c}° · 습도 ${w.humidity}% · 바람 ${w.wind_ms}m/s`);
+  });
+  document.querySelectorAll('.wx-card').forEach((b) => b.onclick = () => {
+    $('results').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      map.invalidateSize();
+      const m = wxMarkers[b.dataset.wx];
+      map.setView(m.getLatLng(), 11);
+      m.openPopup();
+    }, 500);
   });
 }).catch(() => {});
 

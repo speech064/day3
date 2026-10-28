@@ -16,6 +16,8 @@ module.exports = async function handler(req, res) {
         const j = await r.json();
         if (!r.ok) throw new Error(j.message || `OpenWeather 오류 (${r.status})`);
         return [area, {
+          lat: c.lat,
+          lon: c.lon,
           temp_c: Math.round(j.main.temp),
           feels_like_c: Math.round(j.main.feels_like),
           humidity: j.main.humidity,
