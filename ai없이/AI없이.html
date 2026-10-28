@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>제주 스팟 검색 (AI 없이)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;500&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root { --ivory:#faf7f2; --paper:#fff; --ink:#1c2a33; --sub:#6d7780; --line:#e7e0d4; --navy:#12313d; --sea:#2f6f7e; --gold:#b08d57; --gold-soft:#f3ece0;
+          --serif:"Noto Serif KR",serif; --sans:"Noto Sans KR",-apple-system,sans-serif; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:var(--sans); font-weight:300; background:var(--ivory); color:var(--ink); line-height:1.7; }
+  .bar { background:var(--navy); padding:16px 32px; display:flex; justify-content:space-between; align-items:center; }
+  .logo { font-family:"Cormorant Garamond",serif; font-weight:600; font-size:22px; letter-spacing:.35em; color:#fff; text-decoration:none; }
+  .bar a.back { color:#fff; opacity:.85; font-size:13px; letter-spacing:.14em; text-decoration:none; }
+  .wrap { max-width:1180px; margin:0 auto; padding:48px 24px 64px; }
+  .eyebrow { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:18px; color:var(--gold); }
+  h1 { font-family:var(--serif); font-weight:500; font-size:32px; margin:4px 0 8px; }
+  .lead { color:var(--sub); margin:0 0 24px; }
+  .box { background:var(--paper); border:1px solid var(--line); padding:24px; margin-bottom:20px; box-shadow:0 20px 50px -30px rgba(18,49,61,.35); }
+  .ask { display:flex; gap:10px; }
+  input[type=text] { flex:1; font:inherit; font-size:16px; padding:13px 14px; border:1px solid var(--line); background:var(--ivory); color:var(--ink); border-radius:0; }
+  input:focus { outline:1px solid var(--gold); border-color:var(--gold); }
+  button.go { border:0; background:var(--navy); color:#fff; padding:0 28px; font:inherit; font-size:13px; letter-spacing:.2em; cursor:pointer; }
+  button.go:hover { background:var(--gold); }
+  .chips { margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { border:1px solid var(--line); background:var(--ivory); padding:4px 12px; font:inherit; font-size:13px; color:var(--sub); cursor:pointer; border-radius:99px; }
+  .chip:hover { border-color:var(--gold); color:var(--navy); }
+  .layout { display:grid; grid-template-columns:400px 1fr; gap:24px; align-items:start; }
+  .read { font-size:13px; color:var(--sea); margin-bottom:6px; letter-spacing:.03em; }
+  .status { font-size:13px; color:var(--sub); margin-bottom:14px; }
+  .list { display:grid; gap:12px; max-height:560px; overflow:auto; padding-right:4px; }
+  .spot { background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--gold); padding:14px 16px; }
+  .spot b { font-family:var(--serif); font-weight:500; font-size:17px; }
+  .meta { font-size:12px; letter-spacing:.08em; color:var(--sea); }
+  .meta .dot { color:var(--gold); margin:0 6px; }
+  .desc { font-size:13px; color:var(--sub); }
+  .note { font-size:12px; color:var(--sub); margin-top:14px; }
+  #map { height:600px; border:1px solid var(--line); z-index:0; }
+  .pin { width:18px; height:18px; border-radius:50%; background:var(--gold); border:3px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.35); }
+  .err { color:#b4322d; }
+  @media (max-width:900px) { .layout { grid-template-columns:1fr; } #map { height:360px; order:-1; } .list { max-height:none; } .ask { flex-direction:column; } button.go { padding:13px; } }
+</style>
+</head>
+<body>
+<div class="bar"><a class="logo" href="../index.html">JEJU</a><a class="back" href="../index.html">← 메인으로</a></div>
+
+<div class="wrap">
+  <div class="eyebrow">Search without AI</div>
+  <h1>말하듯 검색하세요</h1>
+  <p class="lead">지역·실내/야외·유형 키워드를 찾아 목록에서 그대로 골라드립니다. AI도 API 키도 필요 없습니다.</p>
+
+  <div class="box">
+    <div class="ask">
+      <input type="text" id="q" placeholder="예: 서귀포에 갈만한 실내 박물관" autocomplete="off">
+      <button class="go" id="go">검색</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="read" id="read"></div>
+      <div class="status" id="status">검색어를 입력해 보세요.</div>
+      <div class="list" id="list"></div>
+      <div class="note">목록(jeju_spots.json)에 있는 장소만 보여줍니다. 목록 밖 장소는 없습니다. 좌표가 없어 마커는 세부 지역 중심에 표시됩니다.</div>
+    </div>
+    <div id="map"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const MAX = 20;
+
+const CENTERS = {
+  '동쪽(성산)': [33.4580, 126.9425], '동쪽(구좌)': [33.5560, 126.8600], '제주시': [33.4996, 126.5312],
+  '서쪽(한림)': [33.4140, 126.2650], '서쪽(안덕)': [33.2600, 126.3200], '서귀포': [33.2541, 126.5601],
+};
+// 지역 키워드 → 판별 함수 (jeju_spots.json의 area_rule 기준)
+const AREA_KW = [
+  [['서귀포', '중문', '대정', '남원', '표선'], '서귀포', (s) => s.area === '서귀포'],
+  [['제주시', '애월', '조천', '함덕', '한경', '우도', '추자', '공항'], '제주시', (s) => s.area === '제주시'],
+  [['동쪽', '동부'], '동쪽', (s) => s.area.startsWith('동쪽')],
+  [['성산'], '성산', (s) => s.area.includes('성산')],
+  [['구좌'], '구좌', (s) => s.area.includes('구좌')],
+  [['서쪽', '서부'], '서쪽', (s) => s.area.startsWith('서쪽')],
+  [['한림'], '한림', (s) => s.area.includes('한림')],
+  [['안덕'], '안덕', (s) => s.area.includes('안덕')],
+];
+// 유사어 → 목록의 유형 단어
+const SYNONYMS = {
+  해변: ['바다'], 바닷가: ['바다'], 해수욕장: ['바다'], 산책로: ['산책'], 갤러리: ['미술관'], 전시관: ['전시'],
+  절: ['사찰'], 해안: ['해안도로'], 트레킹: ['올레길'], 등산: ['등산'], 시장: ['시장'],
+  아이: ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'],
+  아이들: ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'],
+  키즈: ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'],
+  어린이: ['체험', '테마파크', '아쿠아리움', '테마공원', '미로공원', '공원'],
+};
+const STOP_JOSA = /(에서|으로|에는|이나|에|을|를|은|는|이|가|도|로|의|만|좀)$/;
+const norm = (s) => s.replace(/\s+/g, '');
+
+let spots = [], vocab = [];
+
+function parse(q) {
+  const areas = AREA_KW.filter(([kws]) => kws.some((k) => q.includes(k)));
+  const wantIn = /실내|안에서|우천|비\s?오|비올/.test(q);
+  const wantOut = /야외|바깥|밖에/.test(q);
+  const indoor = wantIn === wantOut ? undefined : wantIn;
+  const tokens = q.split(/\s+/).map((t) => t.replace(STOP_JOSA, ''));
+  const terms = new Set();
+  vocab.forEach((v) => { if (v.length > 1 ? q.includes(v) : tokens.includes(v)) terms.add(v); });
+  Object.entries(SYNONYMS).forEach(([k, vs]) => {
+    if (q.includes(k) || tokens.includes(k)) vs.forEach((v) => terms.add(v));
+  });
+  return { areas, indoor, terms: [...terms] };
+}
+
+function run(q) {
+  const { areas, indoor, terms } = parse(q);
+  const nq = norm(q);
+  const byName = spots.filter((s) => nq.includes(norm(s.name)));
+  const hasCond = areas.length || indoor !== undefined || terms.length;
+  let found;
+  if (byName.length && !hasCond) {
+    found = byName.map((s) => ({ s, score: 99 }));
+  } else {
+    found = spots
+      .filter((s) => (!areas.length || areas.some(([, , f]) => f(s))) && (indoor === undefined || s.indoor === indoor))
+      .map((s) => {
+        const ts = s.type.split(' · ');
+        return { s, score: terms.filter((t) => ts.includes(t)).length };
+      })
+      .filter((x) => !terms.length || x.score > 0)
+      .sort((a, b) => b.score - a.score);
+  }
+  return { found, areas, indoor, terms, hasCond: hasCond || byName.length };
+}
+
+const map = L.map('map', { scrollWheelZoom: false }).setView([33.38, 126.55], 10);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+const pin = L.divIcon({ className: '', html: '<div class="pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9], popupAnchor: [0, -10] });
+const layer = L.layerGroup().addTo(map);
+
+function render(list) {
+  layer.clearLayers();
+  $('list').innerHTML = list.map((s) => `
+    <div class="spot"><b>${esc(s.name)}</b>
+      <div class="meta">${esc(s.area)}<span class="dot">·</span>${s.indoor ? '실내' : '야외'}</div>
+      <div class="desc">${esc(s.type)}</div></div>`).join('');
+  const byArea = {};
+  list.forEach((s) => (byArea[s.area] = byArea[s.area] || []).push(s));
+  const pts = [];
+  for (const [a, items] of Object.entries(byArea)) {
+    const c = CENTERS[a];
+    if (!c) continue;
+    pts.push(c);
+    L.marker(c, { icon: pin }).addTo(layer).bindPopup(`<b>${esc(a)}</b><br>` + items.map((s) => esc(s.name)).join('<br>'));
+  }
+  if (pts.length) map.fitBounds(pts, { padding: [50, 50], maxZoom: 11 });
+}
+
+function search(q) {
+  q = q.trim();
+  if (!q) return;
+  const r = run(q);
+  const parts = [];
+  if (r.areas.length) parts.push('지역: ' + r.areas.map((a) => a[1]).join(', '));
+  if (r.indoor !== undefined) parts.push(r.indoor ? '실내' : '야외');
+  if (r.terms.length) parts.push('유형: ' + r.terms.join(', '));
+  $('read').textContent = parts.length ? '이렇게 이해했어요 → ' + parts.join(' · ') : '';
+  if (!r.hasCond) {
+    $('status').textContent = '지역(서귀포, 제주시, 동쪽, 서쪽), 실내/야외, 유형(박물관, 오름, 바다 …) 중 하나는 넣어 주세요.';
+    render([]);
+    return;
+  }
+  const list = r.found.slice(0, MAX).map((x) => x.s);
+  $('status').textContent = r.found.length
+    ? `${r.found.length}곳 찾았어요${r.found.length > MAX ? ` (상위 ${MAX}곳 표시)` : ''}`
+    : '조건에 맞는 장소가 목록에 없습니다. 목록 밖 장소는 없어요.';
+  render(list);
+}
+
+$('go').onclick = () => search($('q').value);
+$('q').addEventListener('keydown', (e) => { if (e.key === 'Enter') search($('q').value); });
+['서귀포에 갈만한 실내 박물관', '제주시 야외 오름', '동쪽 바다 산책', '서쪽 전시', '아이랑 가기 좋은 곳'].forEach((t) => {
+  const b = document.createElement('button');
+  b.className = 'chip'; b.textContent = t;
+  b.onclick = () => { $('q').value = t; search(t); };
+  $('chips').appendChild(b);
+});
+
+fetch('../jeju_spots.json').then((r) => r.json()).then((d) => {
+  spots = d.spots;
+  vocab = [...new Set(spots.flatMap((s) => s.type.split(' · ')))];
+}).catch(() => {
+  $('status').innerHTML = '<span class="err">jeju_spots.json을 불러오지 못했습니다. 파일을 직접 열지 말고 서버(배포 주소)로 열어 주세요.</span>';
+});
+</script>
+</body>
+</html>
