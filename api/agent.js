@@ -2,7 +2,7 @@
 // 환경변수: GEMINI_API_KEY (필수), GEMINI_MODEL (선택)
 const { tools, runTool } = require('./tool');
 
-const MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+const MODEL = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
 const MAX_TURNS = 6;
 
 const SYSTEM =
