@@ -4,84 +4,211 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>제주 스팟 맵</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@300;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-  :root { --bg:#0f172a; --card:#1e293b; --line:#334155; --txt:#e2e8f0; --sub:#94a3b8; --pri:#38bdf8; --acc:#f472b6; }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family:-apple-system,"Malgun Gothic",sans-serif; background:var(--bg); color:var(--txt); }
-  header { padding:20px 16px; background:linear-gradient(120deg,#0ea5e9,#8b5cf6 60%,#ec4899); }
-  header h1 { margin:0; font-size:22px; }
-  header p { margin:4px 0 0; opacity:.9; font-size:14px; }
-  main { max-width:1100px; margin:0 auto; padding:16px; display:grid; gap:16px; }
-  .tabs { display:flex; gap:8px; }
-  .tab { flex:1; padding:10px; border:1px solid var(--line); background:var(--card); color:var(--sub); border-radius:10px; cursor:pointer; font-size:15px; }
-  .tab.on { color:#fff; border-color:var(--pri); background:#0c4a6e; }
-  .panel { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; }
-  .row { display:flex; flex-wrap:wrap; gap:10px; align-items:end; }
-  label { font-size:13px; color:var(--sub); display:grid; gap:4px; }
-  select, textarea, button.go { font:inherit; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg); color:var(--txt); }
-  button.go { background:var(--pri); color:#06283d; font-weight:700; cursor:pointer; border:0; }
+  :root {
+    --ivory:#faf7f2; --paper:#fff; --ink:#1c2a33; --sub:#6d7780; --line:#e7e0d4;
+    --navy:#12313d; --sea:#2f6f7e; --gold:#b08d57; --gold-soft:#f3ece0;
+    --serif:"Noto Serif KR","Cormorant Garamond",serif; --sans:"Noto Sans KR",-apple-system,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family:var(--sans); font-weight:300; background:var(--ivory); color:var(--ink); line-height:1.7; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 24px; }
+  .eyebrow { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:18px; color:var(--gold); letter-spacing:.04em; }
+  h2.title { font-family:var(--serif); font-weight:500; font-size:32px; margin:4px 0 8px; letter-spacing:-.01em; }
+  .lead { color:var(--sub); margin:0 0 32px; }
+
+  /* nav */
+  nav { position:fixed; inset:0 0 auto 0; z-index:10; display:flex; justify-content:space-between; align-items:center; padding:20px 40px; color:#fff; transition:background .3s, padding .3s; }
+  nav.solid { background:rgba(18,49,61,.94); padding:12px 40px; backdrop-filter:blur(6px); }
+  .logo { font-family:"Cormorant Garamond",serif; font-size:24px; font-weight:600; letter-spacing:.35em; color:#fff; text-decoration:none; }
+  nav .links a { color:#fff; text-decoration:none; font-size:13px; letter-spacing:.18em; margin-left:32px; opacity:.9; }
+  nav .links a:hover { opacity:1; border-bottom:1px solid var(--gold); }
+
+  /* hero */
+  .hero { position:relative; height:100vh; min-height:560px; overflow:hidden; background:var(--navy); color:#fff; }
+  .hero svg { position:absolute; inset:0; width:100%; height:100%; }
+  .hero .overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(10,28,36,.45), rgba(10,28,36,0) 40%, rgba(10,28,36,.35)); }
+  .hero .copy { position:absolute; left:0; right:0; top:34%; text-align:center; padding:0 24px; }
+  .hero .eyebrow { color:#f1dcb4; font-size:20px; }
+  .hero h1 { font-family:var(--serif); font-weight:300; font-size:clamp(34px,6vw,68px); line-height:1.25; margin:10px 0 14px; letter-spacing:.02em; text-shadow:0 2px 24px rgba(0,0,0,.25); }
+  .hero p { font-size:16px; opacity:.92; margin:0 0 34px; letter-spacing:.06em; }
+  .btn-line { display:inline-block; border:1px solid #fff; color:#fff; padding:14px 38px; text-decoration:none; font-size:13px; letter-spacing:.25em; transition:.25s; }
+  .btn-line:hover { background:#fff; color:var(--navy); }
+  .scroll { position:absolute; bottom:22px; left:50%; transform:translateX(-50%); font-size:11px; letter-spacing:.3em; opacity:.8; }
+
+  section.block { padding:88px 0 24px; }
+
+  /* regions */
+  .regions { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .region { position:relative; height:340px; padding:24px; color:#fff; display:flex; flex-direction:column; justify-content:flex-end; text-align:left; border:0; font:inherit; cursor:pointer; overflow:hidden; transition:transform .35s; }
+  .region::after { content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.5), transparent 60%); }
+  .region:hover { transform:translateY(-6px); }
+  .region > * { position:relative; z-index:1; }
+  .region .en { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:16px; opacity:.9; }
+  .region .ko { font-family:var(--serif); font-size:26px; font-weight:500; }
+  .region .tx { font-size:13px; opacity:.9; margin-top:4px; }
+  .r1 { background:linear-gradient(160deg,#6aa0b4,#1d4b5e); }
+  .r2 { background:linear-gradient(160deg,#f2c27b,#d9714b); }
+  .r3 { background:linear-gradient(160deg,#f3b6a0,#b0587a); }
+  .r4 { background:linear-gradient(160deg,#f6c98f,#6f5a9a); }
+
+  /* planner */
+  .planner { background:var(--paper); border:1px solid var(--line); padding:36px; box-shadow:0 20px 50px -30px rgba(18,49,61,.35); }
+  .seg { display:flex; gap:28px; border-bottom:1px solid var(--line); margin-bottom:28px; }
+  .tab { background:none; border:0; font:inherit; font-size:14px; letter-spacing:.15em; color:var(--sub); padding:0 0 12px; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab.on { color:var(--navy); border-color:var(--gold); font-weight:500; }
+  .fields { display:grid; grid-template-columns:1fr 1fr auto; gap:16px; align-items:end; }
+  label { display:grid; gap:6px; font-size:12px; letter-spacing:.14em; color:var(--sub); }
+  select, textarea { font:inherit; font-size:15px; color:var(--ink); background:var(--ivory); border:1px solid var(--line); padding:12px 14px; width:100%; border-radius:0; }
+  select:focus, textarea:focus { outline:1px solid var(--gold); border-color:var(--gold); }
+  textarea { min-height:90px; resize:vertical; }
+  button.go { border:0; background:var(--navy); color:#fff; padding:14px 34px; font:inherit; font-size:13px; letter-spacing:.22em; cursor:pointer; transition:.25s; }
+  button.go:hover { background:var(--gold); }
   button.go:disabled { opacity:.5; cursor:wait; }
-  textarea { width:100%; min-height:64px; resize:vertical; }
-  #map { height:420px; border-radius:12px; border:1px solid var(--line); }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px; margin-top:12px; }
-  .spot { background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
-  .spot b { display:block; margin-bottom:4px; }
-  .tag { display:inline-block; font-size:12px; padding:2px 8px; border-radius:99px; margin-right:4px; }
-  .in { background:#4c1d95; color:#ddd6fe; } .out { background:#064e3b; color:#a7f3d0; } .ar { background:#334155; color:#cbd5e1; }
-  .desc { font-size:13px; color:var(--sub); margin-top:6px; }
-  .note { font-size:12px; color:var(--sub); margin-top:8px; }
+  #ask { margin-top:16px; }
   .hidden { display:none; }
-  .step { font-size:13px; padding:6px 10px; border-left:3px solid var(--acc); background:var(--bg); margin:6px 0; border-radius:4px; }
-  .answer { white-space:pre-wrap; line-height:1.6; margin-top:10px; }
-  .weather { display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; padding:10px 12px; border-radius:10px; background:linear-gradient(120deg,#075985,#6d28d9); font-size:14px; }
-  .err { color:#fca5a5; }
+  .weather { display:flex; flex-wrap:wrap; gap:6px 22px; margin-top:20px; padding:14px 18px; background:var(--gold-soft); font-size:14px; }
+  .step { font-size:12px; color:var(--sub); padding:6px 0; border-bottom:1px dashed var(--line); word-break:break-all; }
+  .step b { color:var(--sea); font-weight:500; }
+  .answer { white-space:pre-wrap; margin-top:16px; font-size:15px; }
+
+  /* results */
+  .results { display:grid; grid-template-columns:400px 1fr; gap:24px; align-items:start; }
+  .status { font-size:13px; color:var(--sub); letter-spacing:.04em; margin-bottom:14px; }
+  .list { display:grid; gap:12px; max-height:560px; overflow:auto; padding-right:4px; }
+  .spot { background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--gold); padding:14px 16px; }
+  .spot b { font-family:var(--serif); font-weight:500; font-size:17px; }
+  .meta { margin-top:2px; font-size:12px; letter-spacing:.08em; color:var(--sea); }
+  .meta .dot { color:var(--gold); margin:0 6px; }
+  .desc { font-size:13px; color:var(--sub); margin-top:4px; }
+  .note { font-size:12px; color:var(--sub); margin-top:14px; }
+  #map { height:600px; border:1px solid var(--line); z-index:0; }
+  .pin { width:18px; height:18px; border-radius:50%; background:var(--gold); border:3px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.35); }
+  .err { color:#b4322d; }
+
+  footer { margin-top:88px; background:var(--navy); color:#c9d3d8; text-align:center; padding:48px 24px; font-size:13px; letter-spacing:.08em; }
+  footer .logo { display:block; margin-bottom:12px; }
+
+  @media (max-width:900px) {
+    nav, nav.solid { padding:14px 20px; } nav .links { display:none; }
+    .regions { grid-template-columns:1fr 1fr; } .region { height:220px; }
+    .fields { grid-template-columns:1fr; } .planner { padding:22px; }
+    .results { grid-template-columns:1fr; } #map { height:380px; order:-1; } .list { max-height:none; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>🌋 제주 스팟 맵</h1>
-  <p>제주 관광지 목록 기반 · 날씨는 Open-Meteo (API 키 없음)</p>
-</header>
-<main>
-  <div class="tabs">
-    <button class="tab on" data-t="search">🔎 직접 검색</button>
-    <button class="tab" data-t="agent">🤖 AI 추천</button>
-  </div>
 
-  <section id="search" class="panel">
-    <div class="row">
-      <label>지역
-        <select id="area">
-          <option>제주시</option><option>서귀포</option><option>동쪽</option><option>서쪽</option>
-        </select>
-      </label>
-      <label>실내/야외
-        <select id="indoor">
-          <option value="">전체</option><option value="true">실내</option><option value="false">야외</option>
-        </select>
-      </label>
-      <button class="go" id="go">find_spots 검색</button>
+<nav id="nav">
+  <a class="logo" href="#top">JEJU</a>
+  <div class="links"><a href="#regions">REGIONS</a><a href="#plan">PLAN</a><a href="#results">MAP</a></div>
+</nav>
+
+<header class="hero" id="top">
+  <svg viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1d4b5e"/><stop offset=".45" stop-color="#7fb0b8"/>
+        <stop offset=".72" stop-color="#f1d9b5"/><stop offset="1" stop-color="#f6c995"/>
+      </linearGradient>
+      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4f8f9b"/><stop offset="1" stop-color="#12313d"/>
+      </linearGradient>
+      <radialGradient id="sun"><stop offset="0" stop-color="#fff4d6"/><stop offset="1" stop-color="#fff4d6" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="1440" height="800" fill="url(#sky)"/>
+    <circle cx="1060" cy="470" r="220" fill="url(#sun)"/>
+    <circle cx="1060" cy="470" r="46" fill="#fff6dc"/>
+    <path d="M0 600 L260 560 L480 585 L640 470 Q720 400 800 470 L980 585 L1200 555 L1440 590 L1440 650 L0 650Z" fill="#46747f" opacity=".55"/>
+    <path d="M0 640 L180 610 L420 632 L620 520 Q700 455 780 520 L960 632 L1220 606 L1440 636 L1440 700 L0 700Z" fill="#2c5967" opacity=".85"/>
+    <path d="M0 690 Q360 660 720 690 T1440 690 L1440 800 L0 800Z" fill="url(#sea)"/>
+    <g stroke="#fff" stroke-opacity=".35" stroke-width="2" fill="none">
+      <path d="M120 730 q40 -10 80 0 t80 0"/><path d="M520 750 q50 -12 100 0 t100 0"/>
+      <path d="M980 725 q40 -10 80 0 t80 0"/><path d="M1180 765 q50 -12 100 0 t100 0"/>
+      <path d="M300 780 q40 -8 80 0 t80 0"/>
+    </g>
+  </svg>
+  <div class="overlay"></div>
+  <div class="copy">
+    <div class="eyebrow">Island of Wind, Stone &amp; Sea</div>
+    <h1>제주에서 보내는<br>가장 아름다운 하루</h1>
+    <p>지역과 날씨에 맞춰 오늘 머물 곳을 찾아드립니다</p>
+    <a class="btn-line" href="#regions">여행 시작하기</a>
+  </div>
+  <div class="scroll">SCROLL</div>
+</header>
+
+<main class="wrap">
+  <section class="block" id="regions">
+    <div class="eyebrow">Discover</div>
+    <h2 class="title">어디로 떠나시겠어요?</h2>
+    <p class="lead">지역을 선택하면 제주의 명소를 바로 펼쳐 보여드립니다.</p>
+    <div class="regions">
+      <button class="region r1" data-area="제주시"><span class="en">Jeju City</span><span class="ko">제주시</span><span class="tx">공항과 가까운 도심, 바다와 시장</span></button>
+      <button class="region r2" data-area="서귀포"><span class="en">Seogwipo</span><span class="ko">서귀포</span><span class="tx">폭포와 해안, 남쪽의 온화함</span></button>
+      <button class="region r3" data-area="동쪽"><span class="en">East</span><span class="ko">동쪽</span><span class="tx">성산 일출과 구좌의 해변</span></button>
+      <button class="region r4" data-area="서쪽"><span class="en">West</span><span class="ko">서쪽</span><span class="tx">한림·안덕, 노을이 아름다운 곳</span></button>
     </div>
   </section>
 
-  <section id="agent" class="panel hidden">
-    <label>어떤 여행을 원하세요?
-      <textarea id="msg" placeholder="예: 오늘 서귀포에서 아이랑 갈 만한 곳 추천해줘"></textarea>
-    </label>
-    <div class="row" style="margin-top:10px"><button class="go" id="ask">AI에게 추천받기</button></div>
-    <div id="weather"></div>
-    <div id="steps"></div>
-    <div id="answer" class="answer"></div>
+  <section class="block" id="plan">
+    <div class="eyebrow">Plan your day</div>
+    <h2 class="title">나만의 제주 일정</h2>
+    <p class="lead">직접 조건을 고르거나, AI에게 오늘의 날씨에 맞는 추천을 맡겨보세요.</p>
+    <div class="planner">
+      <div class="seg">
+        <button class="tab on" data-t="search">직접 검색</button>
+        <button class="tab" data-t="agent">AI 추천</button>
+      </div>
+
+      <div id="search">
+        <div class="fields">
+          <label>지역
+            <select id="area"><option>제주시</option><option>서귀포</option><option>동쪽</option><option>서쪽</option></select>
+          </label>
+          <label>실내 / 야외
+            <select id="indoor"><option value="">전체</option><option value="true">실내</option><option value="false">야외</option></select>
+          </label>
+          <button class="go" id="go">장소 찾기</button>
+        </div>
+      </div>
+
+      <div id="agent" class="hidden">
+        <label>어떤 여행을 원하세요?
+          <textarea id="msg" placeholder="예: 오늘 서귀포에서 아이랑 갈 만한 곳 추천해줘"></textarea>
+        </label>
+        <button class="go" id="ask">AI에게 추천받기</button>
+        <div id="weather"></div>
+        <div id="steps"></div>
+        <div id="answer" class="answer"></div>
+      </div>
+    </div>
   </section>
 
-  <div id="map"></div>
-  <section class="panel">
-    <div id="status" class="note">조건을 고르고 검색하세요.</div>
-    <div id="list" class="grid"></div>
-    <div class="note">목록에 있는 장소만 보여줍니다. 좌표가 없어 마커는 해당 세부 지역 중심에 표시됩니다. 방문 전 운영 정보는 공식 안내로 확인하세요.</div>
+  <section class="block" id="results">
+    <div class="eyebrow">Your selection</div>
+    <h2 class="title">추천 장소와 지도</h2>
+    <p class="lead" style="margin-bottom:20px">&nbsp;</p>
+    <div class="results">
+      <div>
+        <div id="status" class="status">조건을 고르고 검색하세요.</div>
+        <div id="list" class="list"></div>
+        <div class="note">목록에 있는 장소만 보여줍니다. 좌표가 없어 마커는 세부 지역 중심에 표시됩니다. 방문 전 운영 정보는 공식 안내로 확인하세요.</div>
+      </div>
+      <div id="map"></div>
+    </div>
   </section>
 </main>
+
+<footer>
+  <span class="logo">JEJU</span>
+  제주 관광지 목록 기반 · 날씨 Open-Meteo · 지도 OpenStreetMap
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
@@ -91,20 +218,24 @@ const CENTERS = {
   '서쪽(한림)': [33.4140, 126.2650], '서쪽(안덕)': [33.2600, 126.3200],
   '서귀포': [33.2541, 126.5601],
 };
-const map = L.map('map').setView([33.38, 126.55], 10);
+const map = L.map('map', { scrollWheelZoom: false }).setView([33.38, 126.55], 10);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18, attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
+const pin = L.divIcon({ className: '', html: '<div class="pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9], popupAnchor: [0, -10] });
 let layer = L.layerGroup().addTo(map);
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const nav = $('nav');
+const onScroll = () => nav.classList.toggle('solid', window.scrollY > window.innerHeight * 0.6);
+window.addEventListener('scroll', onScroll); onScroll();
 
 function showSpots(spots) {
   layer.clearLayers();
   $('list').innerHTML = spots.map((s) => `
     <div class="spot"><b>${esc(s.name)}</b>
-      <span class="tag ar">${esc(s.area)}</span>
-      <span class="tag ${s.indoor ? 'in' : 'out'}">${s.indoor ? '실내' : '야외'}</span>
+      <div class="meta">${esc(s.area)}<span class="dot">·</span>${s.indoor ? '실내' : '야외'}</div>
       <div class="desc">${esc(s.description)}</div></div>`).join('');
   const byArea = {};
   spots.forEach((s) => (byArea[s.area] = byArea[s.area] || []).push(s));
@@ -113,7 +244,7 @@ function showSpots(spots) {
     const c = CENTERS[a];
     if (!c) continue;
     pts.push(c);
-    L.marker(c).addTo(layer).bindPopup(`<b>${esc(a)}</b><br>` + items.map((s) => esc(s.name)).join('<br>'));
+    L.marker(c, { icon: pin }).addTo(layer).bindPopup(`<b>${esc(a)}</b><br>` + items.map((s) => esc(s.name)).join('<br>'));
   }
   if (pts.length) map.fitBounds(pts, { padding: [50, 50], maxZoom: 11 });
 }
@@ -152,9 +283,9 @@ async function ask() {
       `<div class="step">${i + 1}. <b>${esc(s.tool)}</b> ${esc(JSON.stringify(s.input))}</div>`).join('');
     if (j.weather) {
       const w = j.weather, t = w.today;
-      $('weather').innerHTML = `<div class="weather"><span>🌤 ${esc(w.area)} ${esc(w.condition)} ${w.temperature_c}°C</span>
-        <span>🌡 ${t.min_c}~${t.max_c}°C</span><span>☔ ${t.rain_probability_pct}%</span><span>🕶 UV ${t.uv_index_max}</span>
-        <span>🌅 ${esc(t.sunrise.slice(11))} / 🌇 ${esc(t.sunset.slice(11))}</span></div>`;
+      $('weather').innerHTML = `<div class="weather"><span>${esc(w.area)} · ${esc(w.condition)} ${w.temperature_c}°C</span>
+        <span>${t.min_c}~${t.max_c}°C</span><span>강수확률 ${t.rain_probability_pct}%</span><span>UV ${t.uv_index_max}</span>
+        <span>일출 ${esc(t.sunrise.slice(11))} · 일몰 ${esc(t.sunset.slice(11))}</span></div>`;
     }
     $('answer').textContent = j.answer;
     if (j.spots.length) { showSpots(j.spots); $('status').textContent = `에이전트가 찾은 ${j.spots.length}곳`; }
@@ -165,10 +296,19 @@ async function ask() {
 }
 $('ask').onclick = ask;
 
-document.querySelectorAll('.tab').forEach((b) => b.onclick = () => {
-  document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('on', x === b));
-  $('search').classList.toggle('hidden', b.dataset.t !== 'search');
-  $('agent').classList.toggle('hidden', b.dataset.t !== 'agent');
+function setTab(name) {
+  document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('on', x.dataset.t === name));
+  $('search').classList.toggle('hidden', name !== 'search');
+  $('agent').classList.toggle('hidden', name !== 'agent');
+}
+document.querySelectorAll('.tab').forEach((b) => b.onclick = () => setTab(b.dataset.t));
+
+document.querySelectorAll('.region').forEach((b) => b.onclick = () => {
+  $('area').value = b.dataset.area;
+  setTab('search');
+  search();
+  $('results').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => map.invalidateSize(), 400);
 });
 </script>
 </body>
