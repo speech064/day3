@@ -1,0 +1,953 @@
+{
+    "region":  "제주특별자치도",
+    "topic":  "제주 관광지·명소",
+    "items":  [
+                  {
+                      "name":  "성산일출봉",
+                      "category":  "자연 명소",
+                      "description":  "제주 동쪽 성산에 있는 관광 명소",
+                      "score":  95,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%84%B1%EC%82%B0%EC%9D%BC%EC%B6%9C%EB%B4%89%20%EC%B2%9C%EC%97%B0%EB%B3%B4%ED%98%B8%EA%B5%AC%EC%97%AD%202019%EB%85%84%20%EC%B4%AC%EC%98%81(%EC%B6%9C%EC%B2%98%20%EB%AC%B8%ED%99%94%EC%9E%AC%EC%B2%AD%20%EB%8C%80%EB%B3%80%EC%9D%B8%EC%8B%A4).jpg?width=800",
+                      "image_credit":  "Korea Heritage Service · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%84%B1%EC%82%B0%EC%9D%BC%EC%B6%9C%EB%B4%89_%EC%B2%9C%EC%97%B0%EB%B3%B4%ED%98%B8%EA%B5%AC%EC%97%AD_2019%EB%85%84_%EC%B4%AC%EC%98%81(%EC%B6%9C%EC%B2%98_%EB%AC%B8%ED%99%94%EC%9E%AC%EC%B2%AD_%EB%8C%80%EB%B3%80%EC%9D%B8%EC%8B%A4).jpg"
+                  },
+                  {
+                      "name":  "동문재래시장",
+                      "category":  "시장",
+                      "description":  "제주시 도심의 전통시장",
+                      "score":  93,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Jeju%20dongmun%20market%201.JPG?width=800",
+                      "image_credit":  "thddbwnd · CC BY 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Jeju_dongmun_market_1.JPG"
+                  },
+                  {
+                      "name":  "서귀포매일올레시장",
+                      "category":  "시장",
+                      "description":  "서귀포 시내의 전통시장",
+                      "score":  93,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Seogwipo%20Maeil%20Olle%20Market%2003.jpg?width=800",
+                      "image_credit":  "Seefooddiet · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Seogwipo_Maeil_Olle_Market_03.jpg"
+                  },
+                  {
+                      "name":  "함덕해수욕장",
+                      "category":  "해변",
+                      "description":  "제주시 조천읍의 에메랄드빛 해변, 서우봉 옆",
+                      "score":  92,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Hamdeok%20Beach%20May%202026%2004.jpg?width=800",
+                      "image_credit":  "Grapesurgeon · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Hamdeok_Beach_May_2026_04.jpg"
+                  },
+                  {
+                      "name":  "협재해수욕장",
+                      "category":  "해변",
+                      "description":  "제주시 한림읍의 하얀 모래 해변, 비양도가 보임",
+                      "score":  90,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Hyeopjae.jpg?width=800",
+                      "image_credit":  "Lcarrion88 · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Hyeopjae.jpg"
+                  },
+                  {
+                      "name":  "사려니숲길",
+                      "category":  "숲·공원",
+                      "description":  "제주시와 서귀포 사이 중산간의 삼나무 숲길",
+                      "score":  85,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%82%AC%EB%A0%A4%EB%8B%88%EC%88%B2%EA%B8%B8%20%EC%99%B8%EB%B6%80%20%EB%AA%A8%EC%8A%B5.jpg?width=800",
+                      "image_credit":  "기나ㅏㄴ · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%82%AC%EB%A0%A4%EB%8B%88%EC%88%B2%EA%B8%B8_%EC%99%B8%EB%B6%80_%EB%AA%A8%EC%8A%B5.jpg"
+                  },
+                  {
+                      "name":  "이호테우해변",
+                      "category":  "해변",
+                      "description":  "제주시 이호동의 해변, 말 모양 등대가 있음",
+                      "score":  85,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "한라산국립공원",
+                      "category":  "오름·산",
+                      "description":  "제주 중앙의 한라산, 백록담이 있는 국립공원",
+                      "score":  85,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/KOCIS%20Halla%20Mountain%20in%20Jeju-do%20(6387785543).jpg?width=800",
+                      "image_credit":  "Korea.net / Korean Culture and Information Service · CC BY-SA 2.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:KOCIS_Halla_Mountain_in_Jeju-do_(6387785543).jpg"
+                  },
+                  {
+                      "name":  "비자림",
+                      "category":  "숲·공원",
+                      "description":  "제주시 구좌읍의 비자나무 군락 숲",
+                      "score":  84,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "만장굴",
+                      "category":  "자연 명소",
+                      "description":  "제주시 구좌읍의 용암동굴, 세계자연유산 용암동굴계에 속함",
+                      "score":  82,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EB%A7%8C%EC%9E%A5%EA%B5%B4%20(24).jpg?width=800",
+                      "image_credit":  "Jocelyndurrey · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EB%A7%8C%EC%9E%A5%EA%B5%B4_(24).jpg"
+                  },
+                  {
+                      "name":  "곽지해수욕장",
+                      "category":  "해변",
+                      "description":  "제주시 애월읍의 해변, 한담 해안산책로와 이어짐",
+                      "score":  80,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "산방산",
+                      "category":  "오름·산",
+                      "description":  "서귀포 안덕면의 종 모양 바위산",
+                      "score":  80,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Sanbangsan%20(5983281424).jpg?width=800",
+                      "image_credit":  "Korea.net / Korean Culture and Information Service · CC BY-SA 2.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Sanbangsan_(5983281424).jpg"
+                  },
+                  {
+                      "name":  "섭지코지",
+                      "category":  "자연 명소",
+                      "description":  "서귀포 성산읍 해안 절벽을 따라 산책로가 이어지는 곶",
+                      "score":  80,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%A0%9C%EC%A3%BC%EB%8F%84%20%EC%84%AD%EC%A7%80%EC%BD%94%EC%A7%80.jpeg?width=800",
+                      "image_credit":  "Db9023 · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%84%AD%EC%A7%80%EC%BD%94%EC%A7%80.jpeg"
+                  },
+                  {
+                      "name":  "송악산",
+                      "category":  "오름·산",
+                      "description":  "서귀포 대정읍 해안의 오름, 둘레길에서 바다와 산방산을 조망",
+                      "score":  80,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "김녕해수욕장",
+                      "category":  "해변",
+                      "description":  "제주시 구좌읍의 맑은 바다 해변",
+                      "score":  78,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EA%B9%80%EB%85%95%EC%84%B1%EC%84%B8%EA%B8%B0%ED%95%B4%EB%B3%80.JPG?width=800",
+                      "image_credit":  "Bohyunlee · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EA%B9%80%EB%85%95%EC%84%B1%EC%84%B8%EA%B8%B0%ED%95%B4%EB%B3%80.JPG"
+                  },
+                  {
+                      "name":  "오설록티뮤지엄",
+                      "category":  "박물관·전시",
+                      "description":  "서귀포 안덕면의 차 박물관과 녹차밭",
+                      "score":  78,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/O'Sulloc%20Tea%20Museum.jpg?width=800",
+                      "image_credit":  "Christian Bolz · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:O'Sulloc_Tea_Museum.jpg"
+                  },
+                  {
+                      "name":  "용머리해안",
+                      "category":  "자연 명소",
+                      "description":  "서귀포 안덕면 산방산 아래 바닷가의 층층이 쌓인 사암 절벽 해안",
+                      "score":  78,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%A0%9C%EC%A3%BC%20%EC%9A%A9%EB%A8%B8%EB%A6%AC%ED%95%B4%EC%95%88%20(Jeju%20Yongmeori%20Coast).jpg?width=800",
+                      "image_credit":  "Marcella Astrid · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%A0%9C%EC%A3%BC_%EC%9A%A9%EB%A8%B8%EB%A6%AC%ED%95%B4%EC%95%88_(Jeju_Yongmeori_Coast).jpg"
+                  },
+                  {
+                      "name":  "우도",
+                      "category":  "섬",
+                      "description":  "제주시 우도면, 성산항에서 배로 가는 섬",
+                      "score":  78,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Udo%20(satellite%20image).jpg?width=800",
+                      "image_credit":  "KOMPSAT-3 / Arirang-3 · KOGL Type 1",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Udo_(satellite_image).jpg"
+                  },
+                  {
+                      "name":  "한라산 영실코스",
+                      "category":  "오름·산",
+                      "description":  "한라산 서쪽의 영실 탐방로, 윗세오름까지 이어짐",
+                      "score":  78,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "카멜리아힐",
+                      "category":  "숲·공원",
+                      "description":  "서귀포 안덕면의 동백 정원",
+                      "score":  76,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Waterfall%2C%20Camellia%20Hill%2C%20Jeju%20(%ED%8F%AD%ED%8F%AC%2C%20%EC%A0%9C%EC%A3%BC%20%EC%B9%B4%EB%A9%9C%EB%A6%AC%EC%95%84%ED%9E%90)%20-%20panoramio.jpg?width=800",
+                      "image_credit":  "골뱅이 · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Waterfall%2C_Camellia_Hill%2C_Jeju_(%ED%8F%AD%ED%8F%AC%2C_%EC%A0%9C%EC%A3%BC_%EC%B9%B4%EB%A9%9C%EB%A6%AC%EC%95%84%ED%9E%90)_-_panoramio.jpg"
+                  },
+                  {
+                      "name":  "새별오름",
+                      "category":  "오름·산",
+                      "description":  "제주시 애월읍의 오름, 들불축제가 열리는 곳",
+                      "score":  75,
+                      "selected":  true,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Sae-Byeol%20Oreum%202020-11-08.jpg?width=800",
+                      "image_credit":  "PArangSae · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Sae-Byeol_Oreum_2020-11-08.jpg"
+                  },
+                  {
+                      "name":  "금능해수욕장",
+                      "category":  "해변",
+                      "description":  "제주시 한림읍 협재 옆의 얕은 바다 해변",
+                      "score":  74,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "대포주상절리대",
+                      "category":  "자연 명소",
+                      "description":  "서귀포 중문 대포 해안의 기둥 모양 주상절리 절벽",
+                      "score":  74,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Jeju%20Island%2020141128%2056.jpg?width=800",
+                      "image_credit":  "KOREA.NET · CC BY-SA 2.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Jeju_Island_20141128_56.jpg"
+                  },
+                  {
+                      "name":  "휴애리자연생활공원",
+                      "category":  "숲·공원",
+                      "description":  "서귀포 남원읍의 자연 체험 공원, 계절 꽃 축제",
+                      "score":  74,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "금오름",
+                      "category":  "오름·산",
+                      "description":  "제주시 한림읍의 오름, 분화구 호수와 노을 명소",
+                      "score":  72,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EA%B8%88%EC%98%A4%EB%A6%84.jpg?width=800",
+                      "image_credit":  "봄삐 · CC BY 2.0 kr",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EA%B8%88%EC%98%A4%EB%A6%84.jpg"
+                  },
+                  {
+                      "name":  "아쿠아플라넷제주",
+                      "category":  "체험·휴양",
+                      "description":  "서귀포 성산읍의 대형 수족관",
+                      "score":  72,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "중문색달해변",
+                      "category":  "해변",
+                      "description":  "서귀포 중문관광단지의 해변, 서핑으로 유명",
+                      "score":  72,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "한림공원",
+                      "category":  "숲·공원",
+                      "description":  "제주시 한림읍의 정원과 동굴이 있는 공원",
+                      "score":  72,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "1100고지",
+                      "category":  "오름·산",
+                      "description":  "한라산 1100도로 해발 1100m 지점의 습지와 휴게소",
+                      "score":  70,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Hallasan%201100%20uplands(%ED%95%9C%EB%9D%BC%EC%82%B0%201100%EA%B3%A0%EC%A7%80).jpg?width=800",
+                      "image_credit":  "Loooys · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Hallasan_1100_uplands(%ED%95%9C%EB%9D%BC%EC%82%B0_1100%EA%B3%A0%EC%A7%80).jpg"
+                  },
+                  {
+                      "name":  "광치기해변",
+                      "category":  "해변",
+                      "description":  "서귀포 성산읍의 해변, 성산일출봉과 일출 조망",
+                      "score":  70,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월)"
+                  },
+                  {
+                      "name":  "녹산로유채꽃길",
+                      "category":  "꽃길",
+                      "description":  "서귀포 표선면 가시리 일대의 유채꽃·벚꽃 드라이브 도로",
+                      "score":  70,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월)"
+                  },
+                  {
+                      "name":  "천지연폭포",
+                      "category":  "폭포",
+                      "description":  "서귀포에 있는 폭포 명소",
+                      "score":  70,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Korea-Jeju-Cheonjiyeon%20Waterfall-01.jpg?width=800",
+                      "image_credit":  "Martin Chen · CC BY 2.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Korea-Jeju-Cheonjiyeon_Waterfall-01.jpg"
+                  },
+                  {
+                      "name":  "표선해수욕장",
+                      "category":  "해변",
+                      "description":  "서귀포 표선면의 넓은 백사장 해변",
+                      "score":  70,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "용눈이오름",
+                      "category":  "오름·산",
+                      "description":  "제주시 구좌읍의 완만한 능선이 이어지는 오름",
+                      "score":  68,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%9A%A9%EB%88%88%EC%9D%B4%EC%98%A4%EB%A6%84%20(2018.05.08).jpg?width=800",
+                      "image_credit":  "Y-S.Ko · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%9A%A9%EB%88%88%EC%9D%B4%EC%98%A4%EB%A6%84_(2018.05.08).jpg"
+                  },
+                  {
+                      "name":  "산방산탄산온천",
+                      "category":  "체험·휴양",
+                      "description":  "서귀포 안덕면의 탄산 온천",
+                      "score":  66,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "쇠소깍",
+                      "category":  "자연 명소",
+                      "description":  "서귀포 효돈천이 바다와 만나는 하구, 투명카약 체험 명소",
+                      "score":  66,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%87%A0%EC%86%8C%EA%B9%8D%20(7).jpg?width=800",
+                      "image_credit":  "Jocelyndurrey · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%87%A0%EC%86%8C%EA%B9%8D_(7).jpg"
+                  },
+                  {
+                      "name":  "용두암",
+                      "category":  "자연 명소",
+                      "description":  "제주시 용담동 해안의 용 머리 모양 화산암",
+                      "score":  66,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 6월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/KOCIS%20Jeju%20Island%20(5982717071).jpg?width=800",
+                      "image_credit":  "Korea.net / Korean Culture and Information Service · CC BY-SA 2.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:KOCIS_Jeju_Island_(5982717071).jpg"
+                  },
+                  {
+                      "name":  "제주돌문화공원",
+                      "category":  "숲·공원",
+                      "description":  "제주시 조천읍의 돌 문화 테마 공원",
+                      "score":  66,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "판포포구",
+                      "category":  "해변",
+                      "description":  "제주시 한경면의 포구, 스노클링 명소",
+                      "score":  66,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "월정리해변",
+                      "category":  "해변",
+                      "description":  "제주시 구좌읍의 해변, 맑은 바다와 카페거리",
+                      "score":  65,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "제주절물자연휴양림",
+                      "category":  "숲·공원",
+                      "description":  "제주시 봉개동의 삼나무 숲 휴양림",
+                      "score":  64,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "도두봉",
+                      "category":  "오름·산",
+                      "description":  "제주시 도두동 해안가의 낮은 오름, 공항 근처 일몰 명소",
+                      "score":  62,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "산양큰엉곶",
+                      "category":  "숲·공원",
+                      "description":  "곶자왈 숲길을 걷는 산책 명소",
+                      "score":  62,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "신화월드",
+                      "category":  "체험·휴양",
+                      "description":  "서귀포 안덕면의 복합리조트와 테마파크",
+                      "score":  62,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "정방폭포",
+                      "category":  "폭포",
+                      "description":  "서귀포 동홍동 해안에서 바다로 바로 떨어지는 폭포",
+                      "score":  62,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Jeongbang%20Waterfall.jpg?width=800",
+                      "image_credit":  "Shane Porter EssPea · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Jeongbang_Waterfall.jpg"
+                  },
+                  {
+                      "name":  "제주동백수목원",
+                      "category":  "숲·공원",
+                      "description":  "동백꽃 철에 방문이 몰리는 수목원",
+                      "score":  62,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월)"
+                  },
+                  {
+                      "name":  "한라수목원",
+                      "category":  "숲·공원",
+                      "description":  "제주시 연동의 도심 속 수목원",
+                      "score":  62,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "다랑쉬오름",
+                      "category":  "오름·산",
+                      "description":  "제주시 구좌읍의 오름, 깊은 분화구가 특징",
+                      "score":  60,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EB%8B%A4%EB%9E%91%EC%89%AC%EC%98%A4%EB%A6%84.JPG?width=800",
+                      "image_credit":  "Commekiss · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EB%8B%A4%EB%9E%91%EC%89%AC%EC%98%A4%EB%A6%84.JPG"
+                  },
+                  {
+                      "name":  "사계해수욕장",
+                      "category":  "해변",
+                      "description":  "서귀포 안덕면의 해변, 산방산과 형제섬이 보임",
+                      "score":  60,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 6월)"
+                  },
+                  {
+                      "name":  "외돌개",
+                      "category":  "자연 명소",
+                      "description":  "서귀포 해안 바다 위에 홀로 솟은 기암",
+                      "score":  60,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%99%B8%EB%8F%8C%EA%B0%9C.jpg?width=800",
+                      "image_credit":  "Tool79 · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%99%B8%EB%8F%8C%EA%B0%9C.jpg"
+                  },
+                  {
+                      "name":  "제주민속오일시장",
+                      "category":  "시장",
+                      "description":  "제주시에서 5일마다 열리는 민속 오일장",
+                      "score":  60,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Jeju%20five%20day%20market.jpg?width=800",
+                      "image_credit":  "Jjw · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Jeju_five_day_market.jpg"
+                  },
+                  {
+                      "name":  "거문오름",
+                      "category":  "오름·산",
+                      "description":  "제주시 조천읍의 세계자연유산 오름, 탐방 예약이 필요함",
+                      "score":  58,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EA%B1%B0%EB%AC%B8%EC%98%A4%EB%A6%84.jpg?width=800",
+                      "image_credit":  "Liszt uhm · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EA%B1%B0%EB%AC%B8%EC%98%A4%EB%A6%84.jpg"
+                  },
+                  {
+                      "name":  "본태박물관",
+                      "category":  "박물관·전시",
+                      "description":  "서귀포 안덕면의 건축·미술 박물관",
+                      "score":  58,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Bontae%20Museum.png?width=800",
+                      "image_credit":  "김나롱 · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Bontae_Museum.png"
+                  },
+                  {
+                      "name":  "비밀의숲",
+                      "category":  "숲·공원",
+                      "description":  "제주시 구좌읍의 삼나무 숲, 사진 명소",
+                      "score":  58,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "비양도",
+                      "category":  "섬",
+                      "description":  "제주시 한림읍 협재 앞바다의 작은 섬",
+                      "score":  58,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%A0%9C%EC%A3%BC%EB%8F%84%20%EB%B9%84%EC%96%91%EB%8F%84%20220130.jpg?width=800",
+                      "image_credit":  "베르니사주 · CC BY 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%A0%9C%EC%A3%BC%EB%8F%84_%EB%B9%84%EC%96%91%EB%8F%84_220130.jpg"
+                  },
+                  {
+                      "name":  "제주목관아",
+                      "category":  "역사·문화",
+                      "description":  "제주시 구도심의 조선시대 관아 유적",
+                      "score":  58,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Gwandeokjeong%20Pavilion%20and%20Jeju%20Mok%20Office%202.JPG?width=800",
+                      "image_credit":  "Thddbwnd · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Gwandeokjeong_Pavilion_and_Jeju_Mok_Office_2.JPG"
+                  },
+                  {
+                      "name":  "천제연폭포",
+                      "category":  "폭포",
+                      "description":  "서귀포 중문관광단지의 3단 폭포",
+                      "score":  58,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Chunjeyeon%20Waterfall%20Jeju%20Island-%20%EC%B2%9C%EC%A0%9C%EC%97%B0%ED%8F%AD%ED%8F%AC.jpg?width=800",
+                      "image_credit":  "Joycekim77 · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Chunjeyeon_Waterfall_Jeju_Island-_%EC%B2%9C%EC%A0%9C%EC%97%B0%ED%8F%AD%ED%8F%AC.jpg"
+                  },
+                  {
+                      "name":  "코난비치",
+                      "category":  "해변",
+                      "description":  "스노클링·물놀이로 알려진 서부 해변",
+                      "score":  58,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "한담해안산책로",
+                      "category":  "자연 명소",
+                      "description":  "제주시 애월 한담에서 곽지로 이어지는 해안 산책로",
+                      "score":  58,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "신창풍차해안도로",
+                      "category":  "자연 명소",
+                      "description":  "제주시 한경면 해안도로를 따라 풍력발전기가 서 있는 드라이브 코스",
+                      "score":  56,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "가파도",
+                      "category":  "섬",
+                      "description":  "서귀포 대정읍의 청보리 섬, 모슬포항에서 배로 이동",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Gapado%20scenery.JPG?width=800",
+                      "image_credit":  "Naturehead · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Gapado_scenery.JPG"
+                  },
+                  {
+                      "name":  "곶자왈도립공원",
+                      "category":  "숲·공원",
+                      "description":  "제주시 한경면의 곶자왈 숲 공원",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "국립제주박물관",
+                      "category":  "박물관·전시",
+                      "description":  "제주시 건입동의 국립박물관, 제주 역사와 문화 전시",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Jeju%20Island%2020141129%2010%20(15926202611).jpg?width=800",
+                      "image_credit":  "Republic of Korea from Seoul, Republic of Korea · CC BY-SA 2.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Jeju_Island_20141129_10_(15926202611).jpg"
+                  },
+                  {
+                      "name":  "마라도",
+                      "category":  "섬",
+                      "description":  "서귀포 대정읍의 국토 최남단 섬",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Marado%20Island%20View.jpg?width=800",
+                      "image_credit":  "Rémi Cormier · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Marado_Island_View.jpg"
+                  },
+                  {
+                      "name":  "바이나흐튼크리스마스박물관",
+                      "category":  "박물관·전시",
+                      "description":  "크리스마스를 주제로 한 박물관, 겨울철 방문이 많음",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "산굼부리",
+                      "category":  "오름·산",
+                      "description":  "제주시 조천읍의 대형 분화구, 억새 명소",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/San-Gumburi%20Volcano%2001.jpg?width=800",
+                      "image_credit":  "Integral · CC BY-SA 2.0 kr",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:San-Gumburi_Volcano_01.jpg"
+                  },
+                  {
+                      "name":  "서귀포치유의숲",
+                      "category":  "숲·공원",
+                      "description":  "서귀포 호근동의 편백 숲 치유 공간",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "세화해변",
+                      "category":  "해변",
+                      "description":  "제주시 구좌읍의 해변, 세화 오일장 근처",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "수월봉",
+                      "category":  "자연 명소",
+                      "description":  "제주시 한경면 해안의 화산 지형, 노을 명소",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Suwolbong%20Volcanic%20Deposits.JPG?width=800",
+                      "image_credit":  "Jjw · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Suwolbong_Volcanic_Deposits.JPG"
+                  },
+                  {
+                      "name":  "스누피가든",
+                      "category":  "체험·휴양",
+                      "description":  "제주시 구좌읍의 스누피 테마 정원",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "아르떼뮤지엄 제주",
+                      "category":  "박물관·전시",
+                      "description":  "제주시 애월읍의 몰입형 미디어아트 전시관",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "에코랜드테마파크",
+                      "category":  "체험·휴양",
+                      "description":  "제주시 조천읍 곶자왈을 달리는 기차 테마파크",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%A0%9C%EC%A3%BC%EB%8F%84%20%EC%97%90%EC%BD%94%EB%9E%9C%EB%93%9C.jpeg?width=800",
+                      "image_credit":  "Db9023 · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%97%90%EC%BD%94%EB%9E%9C%EB%93%9C.jpeg"
+                  },
+                  {
+                      "name":  "윗세오름",
+                      "category":  "오름·산",
+                      "description":  "한라산 고지대의 오름, 영실 코스의 종착지",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 6월), 제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "종달리수국길",
+                      "category":  "꽃길",
+                      "description":  "제주시 구좌읍 종달리의 수국 명소",
+                      "score":  55,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 6월)"
+                  },
+                  {
+                      "name":  "서우봉",
+                      "category":  "오름·산",
+                      "description":  "제주시 조천읍 함덕해변 옆 오름, 유채꽃과 해안 조망",
+                      "score":  52,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 6월)"
+                  },
+                  {
+                      "name":  "성읍민속마을",
+                      "category":  "역사·문화",
+                      "description":  "서귀포 표선면의 전통 민속마을",
+                      "score":  52,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Seongeup%20Historic%20Village.jpg?width=800",
+                      "image_credit":  "Trainholic · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Seongeup_Historic_Village.jpg"
+                  },
+                  {
+                      "name":  "대왕수천예래생태공원",
+                      "category":  "숲·공원",
+                      "description":  "서귀포 예래동의 생태공원",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 6월)"
+                  },
+                  {
+                      "name":  "동백포레스트",
+                      "category":  "숲·공원",
+                      "description":  "동백 정원형 관광지, 겨울철 방문이 많음",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "물영아리오름",
+                      "category":  "오름·산",
+                      "description":  "서귀포 남원읍의 오름, 정상에 습지가 있음",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EB%AC%BC%EC%98%81%EC%95%84%EB%A6%AC%EC%98%A4%EB%A6%84%20%EC%8A%B5%EC%A7%80.jpg?width=800",
+                      "image_credit":  "GROOT in jeju · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EB%AC%BC%EC%98%81%EC%95%84%EB%A6%AC%EC%98%A4%EB%A6%84_%EC%8A%B5%EC%A7%80.jpg"
+                  },
+                  {
+                      "name":  "어승생악",
+                      "category":  "오름·산",
+                      "description":  "제주시 한라산 서북쪽의 낮은 오름, 짧은 탐방로",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호), 제주 관광시장 동향 보고서(2026년 9월)",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Eoseungsaengak%2005.jpg?width=800",
+                      "image_credit":  "Grapesurgeon · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Eoseungsaengak_05.jpg"
+                  },
+                  {
+                      "name":  "이시돌목장",
+                      "category":  "체험·휴양",
+                      "description":  "제주시 한림읍의 목장, 테쉬폰 건물이 있음",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%84%B1%EC%9D%B4%EC%8B%9C%EB%8F%8C%EB%AA%A9%EC%9E%A5.jpg?width=800",
+                      "image_credit":  "이형영 · CC BY-SA 2.0 kr",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%84%B1%EC%9D%B4%EC%8B%9C%EB%8F%8C%EB%AA%A9%EC%9E%A5.jpg"
+                  },
+                  {
+                      "name":  "제주4·3평화공원",
+                      "category":  "역사·문화",
+                      "description":  "제주시 봉개동의 4·3 추모 공원과 기념관",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "제주항공우주박물관",
+                      "category":  "박물관·전시",
+                      "description":  "서귀포 안덕면의 항공우주 박물관",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Jeju%20Aerospace%20Museum%20Aviation%20Hall%2020140606-01.JPG?width=800",
+                      "image_credit":  "Hunini · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Jeju_Aerospace_Museum_Aviation_Hall_20140606-01.JPG"
+                  },
+                  {
+                      "name":  "제주해녀박물관",
+                      "category":  "박물관·전시",
+                      "description":  "제주시 구좌읍 하도리의 해녀 문화 박물관",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "환상숲곶자왈공원",
+                      "category":  "숲·공원",
+                      "description":  "제주시 한경면의 곶자왈 숲 공원",
+                      "score":  50,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "9.81파크",
+                      "category":  "체험·휴양",
+                      "description":  "서귀포 안덕면의 중력 체험 자동차 테마파크",
+                      "score":  48,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "교래자연휴양림",
+                      "category":  "숲·공원",
+                      "description":  "제주시 조천읍의 휴양림",
+                      "score":  48,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EA%B5%90%EB%9E%98%EC%9E%90%EC%97%B0%ED%9C%B4%EC%96%91%EB%A6%BC%202.jpg?width=800",
+                      "image_credit":  "GROOT in jeju · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EA%B5%90%EB%9E%98%EC%9E%90%EC%97%B0%ED%9C%B4%EC%96%91%EB%A6%BC_2.jpg"
+                  },
+                  {
+                      "name":  "넥슨컴퓨터박물관",
+                      "category":  "박물관·전시",
+                      "description":  "제주시 연동의 컴퓨터·게임 박물관",
+                      "score":  48,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Nexon%20Computer%20Museum.jpg?width=800",
+                      "image_credit":  "Narnars0 · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Nexon_Computer_Museum.jpg"
+                  },
+                  {
+                      "name":  "삼양해수욕장",
+                      "category":  "해변",
+                      "description":  "제주시 삼양동의 검은 모래 해변",
+                      "score":  48,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "붉은오름자연휴양림",
+                      "category":  "숲·공원",
+                      "description":  "오름과 숲이 어우러진 자연휴양림",
+                      "score":  45,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "제주민속자연사박물관",
+                      "category":  "박물관·전시",
+                      "description":  "제주시에 있는 제주 민속과 자연사 박물관",
+                      "score":  45,
+                      "selected":  false,
+                      "source":  ""
+                  },
+                  {
+                      "name":  "청수곶자왈",
+                      "category":  "숲·공원",
+                      "description":  "제주 서부의 곶자왈 숲, 반딧불이 축제 장소",
+                      "score":  45,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 6월)"
+                  },
+                  {
+                      "name":  "삼성혈",
+                      "category":  "역사·문화",
+                      "description":  "제주시의 탐라 시조 신화가 전해지는 유적",
+                      "score":  42,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Three%20sacred%20holes%20in%20Jeju.JPG?width=800",
+                      "image_credit":  "Ryuch · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Three_sacred_holes_in_Jeju.JPG"
+                  },
+                  {
+                      "name":  "약천사",
+                      "category":  "역사·문화",
+                      "description":  "서귀포 대포동의 사찰",
+                      "score":  42,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/%EC%95%BD%EC%B2%9C%EC%82%AC1.jpeg?width=800",
+                      "image_credit":  "한국불교문화사업단 · CC BY-SA 4.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:%EC%95%BD%EC%B2%9C%EC%82%AC1.jpeg"
+                  },
+                  {
+                      "name":  "군산오름",
+                      "category":  "오름·산",
+                      "description":  "서귀포 안덕면의 오름, 산방산 일대 조망",
+                      "score":  40,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "돌코리숲",
+                      "category":  "숲·공원",
+                      "description":  "9월호 보고서가 신규 복합관광지로 꼽은 숲 관광지",
+                      "score":  40,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 9월)"
+                  },
+                  {
+                      "name":  "엉또폭포",
+                      "category":  "폭포",
+                      "description":  "비가 온 뒤에만 물이 흐르는 서귀포의 폭포",
+                      "score":  40,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Eongtto-pokpo.JPG?width=800",
+                      "image_credit":  "Cedar101 · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Eongtto-pokpo.JPG"
+                  },
+                  {
+                      "name":  "제주아트서커스",
+                      "category":  "체험·휴양",
+                      "description":  "서커스 공연을 보는 공연형 관광지",
+                      "score":  40,
+                      "selected":  false,
+                      "source":  "제주 관광시장 동향 보고서(2026년 3월호)"
+                  },
+                  {
+                      "name":  "관덕정",
+                      "category":  "역사·문화",
+                      "description":  "제주시 구도심의 조선시대 누정",
+                      "score":  38,
+                      "selected":  false,
+                      "source":  "",
+                      "image":  "https://commons.wikimedia.org/wiki/Special:FilePath/Gwandeokjeong%20Pavilion%202.JPG?width=800",
+                      "image_credit":  "Thddbwnd · CC BY-SA 3.0",
+                      "image_source":  "https://commons.wikimedia.org/wiki/File:Gwandeokjeong_Pavilion_2.JPG"
+                  },
+                  {
+                      "name":  "항몽유적지",
+                      "category":  "역사·문화",
+                      "description":  "제주시 애월읍의 고려 삼별초 항쟁 유적",
+                      "score":  35,
+                      "selected":  false,
+                      "source":  ""
+                  }
+              ]
+}

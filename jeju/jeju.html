@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>제주 소개</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@200;300;400&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#1a1a1a; --sub:#6f6f6f; --line:#e4e1db; --paper:#fff; --mist:#f7f5f1; --gold:#a38a5a;
+    --serif:"Noto Serif KR","Cormorant Garamond",serif; --sans:"Noto Sans KR",-apple-system,sans-serif; --display:"Cormorant Garamond","Noto Serif KR",serif;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family:var(--sans); font-weight:300; color:var(--ink); background:var(--paper); line-height:1.8; }
+  a { color:inherit; }
+  .wrap { max-width:1240px; margin:0 auto; padding:0 40px; }
+
+  /* nav */
+  nav { position:fixed; inset:0 0 auto 0; z-index:20; height:76px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:0 40px; color:#fff; transition:background .35s, color .35s, height .35s, border-color .35s; border-bottom:1px solid transparent; }
+  nav.solid { background:rgba(255,255,255,.97); color:var(--ink); height:64px; border-color:var(--line); }
+  nav .l, nav .r { display:flex; gap:34px; font-size:11px; letter-spacing:.28em; text-transform:uppercase; }
+  nav .r { justify-content:flex-end; }
+  nav a { text-decoration:none; position:relative; padding:6px 0; }
+  nav .l a::after, nav .r a::after { content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .3s; }
+  nav a:hover::after { transform:scaleX(1); }
+  .logo { font-family:var(--display); font-weight:500; font-size:26px; letter-spacing:.5em; padding-left:.5em; text-decoration:none; }
+
+  /* hero */
+  .hero { position:relative; height:100vh; min-height:600px; background:#0e2a35; color:#fff; overflow:hidden; }
+  .hero svg { position:absolute; inset:0; width:100%; height:100%; }
+  .hero::after { content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(8,24,31,.5), rgba(8,24,31,.05) 45%, rgba(8,24,31,.45)); }
+  .hero .copy { position:absolute; z-index:2; left:0; right:0; top:36%; text-align:center; padding:0 24px; }
+  .hero .kicker { font-size:11px; letter-spacing:.5em; text-transform:uppercase; opacity:.9; }
+  .hero h1 { font-family:var(--serif); font-weight:200; font-size:clamp(48px,9vw,112px); letter-spacing:.2em; padding-left:.2em; margin:18px 0 10px; line-height:1.1; }
+  .hero p { font-family:var(--display); font-style:italic; font-weight:300; font-size:clamp(18px,2.2vw,26px); margin:0 0 40px; opacity:.95; }
+  .btn { display:inline-block; border:1px solid currentColor; padding:15px 44px; font-size:11px; letter-spacing:.32em; text-transform:uppercase; text-decoration:none; background:transparent; color:inherit; font-family:var(--sans); cursor:pointer; transition:.3s; }
+  .hero .btn:hover { background:#fff; color:var(--ink); }
+  .cue { position:absolute; z-index:2; bottom:0; left:50%; width:1px; height:64px; background:linear-gradient(#fff,transparent); }
+
+  /* sections */
+  section.sec { padding:120px 0 40px; }
+  .head { text-align:center; margin-bottom:64px; }
+  .eyebrow { font-size:11px; letter-spacing:.4em; text-transform:uppercase; color:var(--gold); }
+  h2 { font-family:var(--serif); font-weight:300; font-size:clamp(28px,4vw,44px); margin:14px 0 14px; letter-spacing:.02em; }
+  .head p { max-width:560px; margin:0 auto; color:var(--sub); }
+  .rule { width:48px; height:1px; background:var(--gold); margin:26px auto 0; }
+
+  /* wish list */
+  .wish { background:var(--mist); margin-top:100px; padding:110px 0 120px; }
+  .wish .head { margin-bottom:56px; }
+  .wgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line); border:1px solid var(--line); }
+  .wcard { background:var(--paper); padding:34px 32px 30px; display:grid; gap:6px; align-content:start; transition:background .3s; }
+  .wcard:hover { background:var(--mist); }
+  .wcard .no { font-family:var(--display); font-size:15px; letter-spacing:.2em; color:var(--gold); }
+  .wcard h3 { font-family:var(--serif); font-weight:400; font-size:22px; margin:2px 0; }
+  .wcard .cat { font-size:11px; letter-spacing:.24em; color:var(--sub); }
+  .wcard p { margin:6px 0 0; font-size:14px; color:#555; }
+
+  /* browse */
+  .tools { display:grid; gap:28px; margin-bottom:56px; }
+  .search { max-width:520px; margin:0 auto; width:100%; position:relative; }
+  .search input { width:100%; border:0; border-bottom:1px solid var(--ink); padding:12px 4px; font:inherit; font-size:16px; text-align:center; background:transparent; color:var(--ink); border-radius:0; }
+  .search input:focus { outline:0; border-color:var(--gold); }
+  .search input::placeholder { color:#aaa; letter-spacing:.08em; }
+  .filters { display:flex; flex-wrap:wrap; justify-content:center; gap:10px 8px; }
+  .chip { border:1px solid var(--line); background:transparent; padding:9px 20px; font:inherit; font-size:12px; letter-spacing:.14em; color:var(--sub); cursor:pointer; transition:.25s; }
+  .chip:hover { border-color:var(--ink); color:var(--ink); }
+  .chip.on { background:var(--ink); border-color:var(--ink); color:#fff; }
+  .chip small { opacity:.65; margin-left:5px; font-size:11px; }
+  .count { text-align:center; font-size:12px; letter-spacing:.2em; color:var(--sub); margin-top:-24px; margin-bottom:40px; }
+
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:32px 24px; }
+  .card { display:grid; grid-template-rows:auto 1fr; animation:rise .5s both; }
+  @keyframes rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+  .pic { position:relative; aspect-ratio:4/3; overflow:hidden; display:flex; align-items:flex-end; padding:14px 16px; color:#fff; }
+  .pic::before { content:""; position:absolute; inset:0; background:var(--bg); transition:transform .6s; }
+  .pic::after { content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.4), transparent 60%); }
+  .card:hover .pic::before { transform:scale(1.07); }
+  .pic img.ph { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s; }
+  .card:hover .pic img.ph { transform:scale(1.07); }
+  .credit { font-size:10.5px; color:#a5a5a5; letter-spacing:.02em; text-decoration:none; line-height:1.5; }
+  .credit:hover { color:var(--gold); text-decoration:underline; }
+  .pic .rank { position:relative; z-index:1; font-family:var(--display); font-size:34px; font-weight:300; line-height:1; letter-spacing:.04em; }
+  .pic .star { position:absolute; z-index:1; top:12px; right:14px; font-size:10px; letter-spacing:.2em; border:1px solid rgba(255,255,255,.7); padding:3px 9px; }
+  .info { padding:18px 2px 0; display:grid; gap:4px; align-content:start; }
+  .info .cat { font-size:11px; letter-spacing:.24em; color:var(--gold); }
+  .info h3 { font-family:var(--serif); font-weight:400; font-size:20px; margin:0; line-height:1.4; }
+  .info p { margin:2px 0 6px; font-size:13.5px; color:#5a5a5a; }
+  .bar { display:flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.14em; color:var(--sub); }
+  .bar i { flex:1; height:1px; background:var(--line); position:relative; }
+  .bar i b { position:absolute; left:0; top:-1px; height:3px; background:var(--gold); }
+  .src { font-size:11px; color:#a5a5a5; letter-spacing:.04em; }
+  .empty { grid-column:1/-1; text-align:center; padding:90px 0; color:var(--sub); font-family:var(--serif); font-size:18px; }
+  .err { color:#a33; }
+
+  footer { margin-top:140px; background:#111; color:#bdb8ad; text-align:center; padding:72px 24px 60px; }
+  footer .logo { color:#fff; display:block; margin-bottom:22px; }
+  footer p { margin:4px 0; font-size:12px; letter-spacing:.1em; }
+
+  @media (max-width:1080px) { .grid { grid-template-columns:repeat(3,1fr); } .wgrid { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:720px) {
+    .wrap { padding:0 20px; } nav, nav.solid { padding:0 18px; } nav .l a:not(:first-child), nav .r { display:none; }
+    nav { grid-template-columns:auto 1fr; } .logo { font-size:20px; letter-spacing:.35em; }
+    .grid { grid-template-columns:repeat(2,1fr); gap:26px 14px; } .wgrid { grid-template-columns:1fr; }
+    section.sec { padding-top:80px; } .info h3 { font-size:17px; } .info p { font-size:12.5px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="l"><a href="#wish">가 보고 싶은 곳</a><a href="#browse">명소</a></div>
+  <a class="logo" href="#top">JEJU</a>
+  <div class="r"><a href="#browse" id="navSearch">검색</a></div>
+</nav>
+
+<header class="hero" id="top">
+  <svg viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#173f50"/><stop offset=".5" stop-color="#6fa3ae"/><stop offset=".78" stop-color="#eed5b0"/><stop offset="1" stop-color="#f4c58e"/></linearGradient>
+      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#477f8b"/><stop offset="1" stop-color="#0e2a35"/></linearGradient>
+      <radialGradient id="sun"><stop offset="0" stop-color="#fff3d2"/><stop offset="1" stop-color="#fff3d2" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="1440" height="800" fill="url(#sky)"/>
+    <circle cx="1080" cy="500" r="230" fill="url(#sun)"/><circle cx="1080" cy="500" r="44" fill="#fff6dc"/>
+    <path d="M0 610 L260 570 L480 595 L650 480 Q720 410 790 480 L980 595 L1200 565 L1440 600 L1440 660 L0 660Z" fill="#4a7782" opacity=".5"/>
+    <path d="M0 650 L180 620 L420 642 L630 530 Q705 465 780 530 L960 642 L1220 616 L1440 646 L1440 710 L0 710Z" fill="#2b5866" opacity=".88"/>
+    <path d="M0 700 Q360 670 720 700 T1440 700 L1440 800 L0 800Z" fill="url(#sea)"/>
+    <g stroke="#fff" stroke-opacity=".3" stroke-width="2" fill="none"><path d="M120 740 q40 -10 80 0 t80 0"/><path d="M520 760 q50 -12 100 0 t100 0"/><path d="M980 735 q40 -10 80 0 t80 0"/><path d="M1180 775 q50 -12 100 0 t100 0"/></g>
+  </svg>
+  <div class="copy">
+    <div class="kicker">Jeju Island · South Korea</div>
+    <h1>제주</h1>
+    <p>Where wind, stone and sea meet</p>
+    <a class="btn" href="#wish">둘러보기</a>
+  </div>
+  <div class="cue"></div>
+</header>
+
+<div class="wish" id="wish">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Wish list</div>
+      <h2>가 보고 싶은 곳</h2>
+      <p>점수가 높고 꼭 가 보고 싶은 곳으로 표시된 명소만 모았습니다.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="wgrid" id="wgrid"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="sec" id="browse">
+    <div class="head">
+      <div class="eyebrow">Discover</div>
+      <h2>제주의 명소</h2>
+      <p>점수가 높은 순으로 정렬했습니다. 이름으로 찾거나 카테고리로 좁혀 보세요.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="tools">
+      <div class="search"><input id="q" type="search" placeholder="명소 이름으로 검색" autocomplete="off"></div>
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="count" id="count"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+</div>
+
+<footer>
+  <span class="logo">JEJU</span>
+  <p id="meta"></p>
+  <p>자료: 제주 관광시장 동향 보고서(2026년 3월호·6월호·9월호) 외</p>
+  <p>사진: 위키미디어 커먼즈 (작가와 라이선스는 각 카드에 표시, 사진이 없는 곳은 색감 패널)</p>
+</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm = (s) => String(s).replace(/\s+/g, '').toLowerCase();
+
+// 카테고리별 색감 (사진 대신 쓰는 차분한 톤)
+const TONES = {
+  '자연 명소':'linear-gradient(135deg,#6d9aa6,#24505d)', '오름·산':'linear-gradient(135deg,#8aa07a,#3d5a3f)',
+  '해변':'linear-gradient(135deg,#8cc3c9,#2f7f8f)', '폭포':'linear-gradient(135deg,#7fa9c4,#2d5778)',
+  '숲·공원':'linear-gradient(135deg,#7da38a,#2f5b45)', '꽃길':'linear-gradient(135deg,#e3a9b5,#a85a73)',
+  '섬':'linear-gradient(135deg,#6fb0c9,#1f6285)', '시장':'linear-gradient(135deg,#e1b277,#a8683a)',
+  '박물관·전시':'linear-gradient(135deg,#a39ac4,#50467f)', '체험·휴양':'linear-gradient(135deg,#e6a98d,#b0583c)',
+  '역사·문화':'linear-gradient(135deg,#bfa47b,#6d5632)',
+};
+const tone = (c) => TONES[c] || 'linear-gradient(135deg,#9aa5ab,#4d5a60)';
+
+let items = [], cat = '전체';
+
+function srcText(s) {
+  const n = s.source ? s.source.split(', ').length : 0;
+  return n ? `보고서 ${n}건 인용` : '보고서 외 추가';
+}
+
+function renderWish() {
+  const picks = items.filter((i) => i.selected);
+  $('wgrid').innerHTML = picks.map((i) => `
+    <article class="wcard">
+      <span class="no">No.${String(i.rank).padStart(2, '0')}</span>
+      <span class="cat">${esc(i.category)}</span>
+      <h3>${esc(i.name)}</h3>
+      <p>${esc(i.description)}</p>
+    </article>`).join('') || '<div class="empty">표시된 곳이 없습니다.</div>';
+}
+
+function renderFilters() {
+  const counts = {};
+  items.forEach((i) => (counts[i.category] = (counts[i.category] || 0) + 1));
+  const cats = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+  $('filters').innerHTML = [['전체', items.length], ...cats.map((c) => [c, counts[c]])]
+    .map(([c, n]) => `<button class="chip${c === cat ? ' on' : ''}" data-c="${esc(c)}">${esc(c)}<small>${n}</small></button>`).join('');
+  document.querySelectorAll('.chip').forEach((b) => b.onclick = () => { cat = b.dataset.c; renderFilters(); renderGrid(); });
+}
+
+function renderGrid() {
+  const q = norm($('q').value);
+  const list = items.filter((i) => (cat === '전체' || i.category === cat) && (!q || norm(i.name).includes(q)));
+  $('count').textContent = list.length ? `${list.length} DESTINATIONS` : '';
+  $('grid').innerHTML = list.length ? list.map((i, k) => `
+    <article class="card" style="animation-delay:${Math.min(k, 12) * 35}ms">
+      <div class="pic" style="--bg:${tone(i.category)}">
+        ${i.image ? `<img class="ph" src="${esc(i.image)}" alt="${esc(i.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
+        <span class="rank">${String(i.rank).padStart(2, '0')}</span>
+        ${i.selected ? '<span class="star">WISH</span>' : ''}
+      </div>
+      <div class="info">
+        <span class="cat">${esc(i.category)}</span>
+        <h3>${esc(i.name)}</h3>
+        <p>${esc(i.description)}</p>
+        <div class="bar"><span>${i.score}</span><i><b style="width:${i.score}%"></b></i></div>
+        <span class="src" title="${esc(i.source || '')}">${srcText(i)}</span>
+        ${i.image ? `<a class="credit" href="${esc(i.image_source || i.image)}" target="_blank" rel="noopener">사진 ${esc(i.image_credit || '')}</a>` : ''}
+      </div>
+    </article>`).join('') : '<div class="empty">검색 결과가 없습니다. 목록에 없는 이름이에요.</div>';
+}
+
+function init(d) {
+  items = d.items.slice().sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, 'ko'))
+    .map((i, k) => ({ ...i, rank: k + 1 }));
+  $('meta').textContent = `${d.region} · ${d.topic} · ${items.length}곳`;
+  renderWish(); renderFilters(); renderGrid();
+}
+
+$('q').addEventListener('input', renderGrid);
+const nav = $('nav');
+const onScroll = () => nav.classList.toggle('solid', window.scrollY > window.innerHeight * 0.7);
+addEventListener('scroll', onScroll); onScroll();
+$('navSearch').addEventListener('click', () => setTimeout(() => $('q').focus({ preventScroll: true }), 600));
+
+fetch('jeju_spots.json').then((r) => r.json()).then(init).catch(() => {
+  $('grid').innerHTML = '<div class="empty err">jeju_spots.json을 불러오지 못했습니다. 파일을 직접 열지 말고 서버(배포 주소)로 열어 주세요.</div>';
+});
+</script>
+</body>
+</html>

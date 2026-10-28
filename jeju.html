@@ -79,6 +79,10 @@
   .pic::before { content:""; position:absolute; inset:0; background:var(--bg); transition:transform .6s; }
   .pic::after { content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.4), transparent 60%); }
   .card:hover .pic::before { transform:scale(1.07); }
+  .pic img.ph { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s; }
+  .card:hover .pic img.ph { transform:scale(1.07); }
+  .credit { font-size:10.5px; color:#a5a5a5; letter-spacing:.02em; text-decoration:none; line-height:1.5; }
+  .credit:hover { color:var(--gold); text-decoration:underline; }
   .pic .rank { position:relative; z-index:1; font-family:var(--display); font-size:34px; font-weight:300; line-height:1; letter-spacing:.04em; }
   .pic .star { position:absolute; z-index:1; top:12px; right:14px; font-size:10px; letter-spacing:.2em; border:1px solid rgba(255,255,255,.7); padding:3px 9px; }
   .info { padding:18px 2px 0; display:grid; gap:4px; align-content:start; }
@@ -169,6 +173,7 @@
   <span class="logo">JEJU</span>
   <p id="meta"></p>
   <p>자료: 제주 관광시장 동향 보고서(2026년 3월호·6월호·9월호) 외</p>
+  <p>사진: 위키미디어 커먼즈 (작가와 라이선스는 각 카드에 표시, 사진이 없는 곳은 색감 패널)</p>
 </footer>
 
 <script>
@@ -221,6 +226,7 @@ function renderGrid() {
   $('grid').innerHTML = list.length ? list.map((i, k) => `
     <article class="card" style="animation-delay:${Math.min(k, 12) * 35}ms">
       <div class="pic" style="--bg:${tone(i.category)}">
+        ${i.image ? `<img class="ph" src="${esc(i.image)}" alt="${esc(i.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
         <span class="rank">${String(i.rank).padStart(2, '0')}</span>
         ${i.selected ? '<span class="star">WISH</span>' : ''}
       </div>
@@ -230,6 +236,7 @@ function renderGrid() {
         <p>${esc(i.description)}</p>
         <div class="bar"><span>${i.score}</span><i><b style="width:${i.score}%"></b></i></div>
         <span class="src" title="${esc(i.source || '')}">${srcText(i)}</span>
+        ${i.image ? `<a class="credit" href="${esc(i.image_source || i.image)}" target="_blank" rel="noopener">사진 ${esc(i.image_credit || '')}</a>` : ''}
       </div>
     </article>`).join('') : '<div class="empty">검색 결과가 없습니다. 목록에 없는 이름이에요.</div>';
 }
